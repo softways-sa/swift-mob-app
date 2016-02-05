@@ -1,0 +1,12 @@
+<ion-view view-title="Home">
+  <ion-content>
+    <div class="list">
+      <a ng-repeat="category in CategoryList" class="item item-thumbnail-left" href="#/app/listing/{{category.id}}">
+        <img ng-src="{{category.image}}" alt="">
+        <h2>{{category.name}}</h2>
+        <p>{{category.description}}</p>
+      </a>
+    </div>
+    <ion-infinite-scroll ng-if="canWeLoadMoreContent()" on-infinite="populateList()" distance="1%"></ion-infinite-scroll>
+  </ion-content>
+</ion-view>

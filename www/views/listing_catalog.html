@@ -1,0 +1,29 @@
+<ion-view>
+  <ion-nav-title>
+    {{pathName}}
+  </ion-nav-title>
+  <ion-content>
+    <div class="list">
+      <a ng-repeat="category in ListingCatalog" class="item item-thumbnail-left" href="#/app/listing/{{category.id}}">
+        <img ng-src="{{category.image}}" alt="">
+        <h2>{{category.name}}</h2>
+        <p>{{category.description}}</p>
+      </a>
+    </div>
+    <div style="text-align: center;"><h2>All Items</h2></div>
+    <div class="row" ng-repeat="product in ListingProducts">
+      <div class="col col-50">  
+        <div class="list card">
+          <div class="item item-body">
+            <a href="#/app/product/{{product.id}}" style="text-decoration: none;">
+              <div class="item-image"><img class="" ng-src="{{product.image}}" alt=""></div>
+              <h2>{{product.name}}</h2>
+              <p>{{product.price}}</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ion-infinite-scroll ng-if="canWeLoadMoreContent()" on-infinite="populateList()" distance="1%"></ion-infinite-scroll>
+  </ion-content>
+</ion-view>

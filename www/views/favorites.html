@@ -1,0 +1,20 @@
+<ion-view view-title="favorite">
+  <ion-content>
+    <div class="list">
+      <h2>Favorites</h2>
+    </div>
+    <div class="row" ng-repeat="favorite in favorites">
+      <div class="col col-50">  
+        <div class="list card">
+          <div class="item item-body">
+            <a href="#/app/product/{{favorite.id}}" style="text-decoration: none;">
+              <div class="item-image"><img ng-src="{{favorite.image}}" alt=""></div>
+              <h2>{{favorite.name}}</h2>
+              <p>{{favorite.price}}</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

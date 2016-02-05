@@ -1,0 +1,1 @@
+Mobile application for swift e-commerce platform
