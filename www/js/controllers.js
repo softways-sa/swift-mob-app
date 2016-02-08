@@ -123,7 +123,6 @@ angular.module('starter.controllers', [])
     return ($scope.ListingProducts.length > $scope.list.length) ? false : true;
   };
   populateLists();
-
   function populateLists() {
     var limit = from + 9;
     ListingPage.getProducts($scope.categoryId, from, limit).success(function (data) {
@@ -181,6 +180,23 @@ angular.module('starter.controllers', [])
 
 .factory('Favorites', function ($localstorage) {
   return {    
+      searchFavorites: function (favoriteId,favoriteName,favoriteImage,favoriteDescription,favoritePrice) {
+        var productId = favoriteId;
+        var productName = favoriteName;
+        var productImage = favoriteImage;
+        var productDescription = favoriteDescription;
+        var productPrice = favoritePrice;
+        var favorites = (JSON.parse($localstorage.getItem('favorites')) || []);
+        for (var i = 0; i < favorites.length; i++) {
+          if (favorites[i].id === productId) {
+            this.deleteFavorites(productId);
+            break;
+          }
+          else if (favorites[i].id !== productId) {            
+            this.addToFavorites(productId,productName,productImage,productDescription,productPrice);
+          }
+        }
+      },
       addToFavorites: function (favoriteId,favoriteName,favoriteImage,favoriteDescription,favoritePrice) {
         //$localstorage.clear();
         var productId = favoriteId;
@@ -191,10 +207,10 @@ angular.module('starter.controllers', [])
         var favorites = (JSON.parse($localstorage.getItem('favorites')) || []);        
         var duplicate_favorite = false;
         for (var i=0; i < favorites.length; i++) {
-            if (favorites[i].id === productId) {
-                duplicate_favorite = true;
-                break;
-            }
+          if (favorites[i].id === productId) {
+            duplicate_favorite = true;
+            break;
+          }
         }
         if (duplicate_favorite === false){
           var new_item = {"id" : productId,
@@ -211,16 +227,27 @@ angular.module('starter.controllers', [])
         var productId = favoriteId;   
         var favorites = (JSON.parse($localstorage.getItem('favorites')) || []); 
         for (var i=0; i < favorites.length; i++) {
-            if (favorites[i].id === productId) {
-              console.log(i);
-                favorites.splice(i,1);
-                $localstorage.setObject('favorites', favorites);
-                break;
-            }
+          if (favorites[i].id === productId) {
+            favorites.splice(i,1);
+            $localstorage.setObject('favorites', favorites);
+            break;
+          }
         }
       },
       getFavorites: function () {  
         return $localstorage.getObject('favorites');
+      },
+      getFavoriteId: function (favoriteId) {   
+        var productId = favoriteId;   
+        var isFavorite = false;
+        var favorites = (JSON.parse($localstorage.getItem('favorites')) || []); 
+        for (var i=0; i < favorites.length; i++) {
+          if (favorites[i].id == productId) {
+            isFavorite = true;
+            break;
+          }
+        }
+        return isFavorite;
       }
   };
 })
@@ -231,6 +258,13 @@ angular.module('starter.controllers', [])
     $scope.pathName = data.product_details[0].name;
   });  
   $scope.favoritesService = Favorites;
+  
+  $scope.$watch(function () { return Favorites.getFavoriteId($stateParams.productId); }, function (newVal, oldVal) {
+    if (typeof newVal !== 'undefined') {
+        $scope.isFavorite = Favorites.getFavoriteId($stateParams.productId);
+    }
+});
+  console.log($scope.isFavorite);
 })
 
 .controller('FavoritesCtrl', function ($scope, Favorites) {

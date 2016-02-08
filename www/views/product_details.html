@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view cache-view="false">
   <ion-nav-title>
     {{pathName}}
   </ion-nav-title>
@@ -7,14 +7,11 @@
       <div class="item item-avatar">
         <h2>{{product.name}} - <span class="price">{{product.price}} €</span></h2>
         <div class="row">
-          <div class="col col-33">
-            <button  class="button button-block button-light" ng-click=""><i class="ion-android-share-alt"></i></button>            
+          <div class="col col-50">
+            <button class="button button-block button-light" ng-click=""><i class="ion-android-share-alt"></i></button>            
           </div>
-          <div class="col col-33">
-            <button  class="button button-block button-light" ng-click="favoritesService.addToFavorites({{product.id}},'{{product.name}}','{{product.image}}','{{product.description}}',{{product.price}});"><i class="ion-android-favorite-outline"></i></button>
-          </div>
-          <div class="col col-33">
-            <button  class="button button-block button-light" ng-click="favoritesService.deleteFavorites({{product.id}});">Delete</button>
+          <div class="col col-50">
+            <button class="button button-block button-light heart" ng-class="{heart: isFavorite===true,heart2: isFavorite===false}" ng-click="favoritesService.searchFavorites({{product.id}},'{{product.name}}','{{product.image}}','{{product.description}}',{{product.price}});"><i class="ion-android-favorite-outline"></i></button>
           </div>
         </div>
       </div>

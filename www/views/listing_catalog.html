@@ -11,18 +11,20 @@
       </a>
     </div>
     <div style="text-align: center;"><h2>All Items</h2></div>
-    <div class="row" ng-repeat="product in ListingProducts">
-      <div class="col col-50">  
-        <div class="list card">
+    <div ng-repeat="product in ListingProducts">
+    <div class="row" ng-if="$even">
+      <div class="col col-50" ng-repeat="item in [ListingProducts[$index],ListingProducts[$index + 1]]">
+        <div class="list card" ng-show="item.name">
           <div class="item item-body">
-            <a href="#/app/product/{{product.id}}" style="text-decoration: none;">
-              <div class="item-image"><img class="" ng-src="{{product.image}}" alt=""></div>
-              <h2>{{product.name}}</h2>
-              <p>{{product.price}}</p>
+            <a href="#/app/product/{{item.id}}" style="text-decoration: none;">
+              <div class="item-image"><img class="" ng-src="{{item.image}}" alt=""></div>
+              <h2>{{item.name}}</h2>
+              <p>{{item.price}}</p>
             </a>
           </div>
         </div>
       </div>
+    </div>
     </div>
     <ion-infinite-scroll ng-if="canWeLoadMoreContent()" on-infinite="populateList()" distance="1%"></ion-infinite-scroll>
   </ion-content>

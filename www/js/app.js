@@ -53,6 +53,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper'])
 
     .state('app.product', {
       url: '/product/:productId',
+      cache: false,
       views: {
         'menuContent': {
           templateUrl: 'views/product_details.html',

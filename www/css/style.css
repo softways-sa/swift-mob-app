@@ -1,4 +1,12 @@
 /* Empty. Add your own CSS if you like */
 .price{
-    color:#4275c3;
+  color:#4275c3;
+}
+.heart {
+  text-decoration: underline;
+  color:#ff0000 !important;
+}
+.heart2 {
+  text-decoration: underline;
+  color:#4275c3 !important;
 }
