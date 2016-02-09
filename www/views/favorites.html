@@ -1,4 +1,4 @@
-<ion-view view-title="favorite">
+<ion-view view-title="favorite" cache-view="false">
   <ion-content>
     <div class="list">
       <h2>Favorites</h2>
@@ -8,6 +8,7 @@
       <div class="col col-50" ng-repeat="favorite in [favorites[$index],favorites[$index + 1]]">
         <div class="list card" ng-show="favorite.name">
           <div class="item item-body">
+            <button class="button button-block button-light heart" ng-class="{heart: isFavorite===true,heart2: isFavorite===false}" ng-click="favoritesServices.deleteFavorites({{favorite.id}});"><i class="ion-android-favorite-outline"></i></button>
             <a href="#/app/product/{{favorite.id}}" style="text-decoration: none;">
               <div class="item-image"><img class="" ng-src="{{favorite.image}}" alt=""></div>
               <h2>{{favorite.name}}</h2>
@@ -17,6 +18,11 @@
         </div>
       </div>
     </div>
+    </div>
+    <div>
+      <button class="button button-block button-assertive" ng-click="favoritesServices.clearFavorites()">
+        Clear Favorites
+      </button>
     </div>
   </ion-content>
 </ion-view>
