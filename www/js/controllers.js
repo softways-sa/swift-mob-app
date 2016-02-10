@@ -45,9 +45,9 @@ angular.module('starter.controllers', [])
 
 .factory('CategoryListing', function ($http) {
   return{
-    getCategories: function (from, limit) {
+    getCategories: function () {
       return $http({
-        url: 'http://www.webaction.gr/demo/request/swift_home.php?offset=' + from + '&limit=' + limit + '',
+        url: 'http://www.webaction.gr/demo/request/swift_home.php',
         method: 'GET'
       });
     }
@@ -55,35 +55,40 @@ angular.module('starter.controllers', [])
 })
 
 .controller('HomeCtrl', function ($scope, CategoryListing) {
-
-  $scope.CategoryList = [];
+  
+  $scope._list = [];
   $scope.list = [];
+  var result = true;
   var from = 0;
-
   $scope.populateList = function () {
-    populateLists();
-  };
-  $scope.canWeLoadMoreContent = function () {
-    return ($scope.CategoryList.length > $scope.list.length) ? false : true;
-  };
-  populateLists();
-
-  function populateLists() {
     var limit = from + 9;
-    CategoryListing.getCategories(from, limit).success(function (data) {
-      $scope.list = data.categories;
-      for (var i = from; i <= limit; i++) {
-        $scope.CategoryList.push({
-          id: $scope.list[i].id,
-          image: $scope.list[i].image,
-          name: $scope.list[i].name,
-          description: $scope.list[i].description
-        });
-        from = i + 1;
-      }
-    });
+    if (result !== false) {
+      CategoryListing.getCategories().success(function (data) {
+        $scope.list = data.categories;
+        for (var i = from; i <= limit; i++) {
+          if (i < $scope.list.length) {
+            $scope._list.push({
+              id: $scope.list[i].id,
+              image: $scope.list[i].image,
+              name: $scope.list[i].name,
+              description: $scope.list[i].description
+            });
+            from = i + 1;
+          }
+        }
+      });
+    }
     $scope.$broadcast('scroll.infiniteScrollComplete');
-  }
+  };
+
+  $scope.canWeLoadMoreContent = function () {
+    if ($scope._list.length > $scope.list.length - 1) {
+      var result = false;
+    } else
+      result = true;
+    return result;
+  };
+  $scope.populateList();
 })
 
 .factory('ListingPage', function ($http) {
@@ -94,9 +99,9 @@ angular.module('starter.controllers', [])
         method: 'GET'
       });
     },
-    getProducts: function (categoryId, from, limit) {
+    getProducts: function (categoryId) {
       return $http({
-        url: 'http://www.webaction.gr/demo/request/swift_products.php?category_id=' + categoryId + '&offset=' + from + '&limit=' + limit + '',
+        url: 'http://www.webaction.gr/demo/request/swift_products2.php?category_id=' + categoryId,
         method: 'GET'
       });
     }
@@ -112,35 +117,39 @@ angular.module('starter.controllers', [])
     $scope.pathName = data.pathname[0].name;
   });
 
-  $scope.ListingProducts = [];
+  $scope._list = [];
   $scope.list = [];
+  var result = true;
   var from = 0;
-
   $scope.populateList = function () {
-    populateLists();
-  };
-  $scope.canWeLoadMoreContent = function () {
-    return ($scope.ListingProducts.length > $scope.list.length) ? false : true;
-  };
-  populateLists();
-  function populateLists() {
     var limit = from + 9;
-    ListingPage.getProducts($scope.categoryId, from, limit).success(function (data) {
-      $scope.list = data.products;
-      for (var i = from; i <= limit; i++) {
-        $scope.ListingProducts.push({
-          id: $scope.list[i].id,
-          image: $scope.list[i].image,
-          name: $scope.list[i].name,
-          price: $scope.list[i].price,
-          description: $scope.list[i].description
-        });
-        from = i + 1;
-      }
-    });$scope.$apply(function(){
+    if (result !== false) {
+      ListingPage.getProducts($scope.categoryId).success(function (data) {
+        $scope.list = data.products;
+        for (var i = from; i <= limit; i++) {
+          if (i < $scope.list.length) {
+            $scope._list.push({
+              id: $scope.list[i].id,
+              image: $scope.list[i].image,
+              name: $scope.list[i].name,
+              description: $scope.list[i].description
+            });
+            from = i + 1;
+          }
+        }
+      });
+    }
     $scope.$broadcast('scroll.infiniteScrollComplete');
-});
-  }
+  };
+
+  $scope.canWeLoadMoreContent = function () {
+    if ($scope._list.length > $scope.list.length - 1) {
+      var result = false;
+    } else
+      result = true;
+    return result;
+  };
+  $scope.populateList();
 })
 
 .factory('ProductDetails', function ($http) {

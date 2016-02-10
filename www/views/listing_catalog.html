@@ -11,9 +11,9 @@
       </a>
     </div>
     <div style="text-align: center;"><h2>All Items</h2></div>
-    <div ng-repeat="product in ListingProducts">
+    <div ng-repeat="product in _list">
     <div class="row" ng-if="$even">
-      <div class="col col-50" ng-repeat="item in [ListingProducts[$index],ListingProducts[$index + 1]]">
+      <div class="col col-50" ng-repeat="item in [_list[$index],_list[$index + 1]]">
         <div class="list card" ng-show="item.name">
           <div class="item item-body">
             <a href="#/app/product/{{item.id}}" style="text-decoration: none;">
@@ -26,6 +26,10 @@
       </div>
     </div>
     </div>
-    <ion-infinite-scroll ng-if="canWeLoadMoreContent()" on-infinite="populateList()" distance="1%"></ion-infinite-scroll>
+    <ion-infinite-scroll 
+            ng-if="canWeLoadMoreContent()"
+            on-infinite="populateList()"  
+            distance="1%">
+    </ion-infinite-scroll> 
   </ion-content>
 </ion-view>
