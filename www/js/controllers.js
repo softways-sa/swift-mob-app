@@ -271,19 +271,24 @@ angular.module('starter.controllers', [])
       }
   };
 })
-.controller('ProductCtrl', function ($scope, $stateParams, ProductDetails, Favorites) {
+.controller('ProductCtrl', function ($scope, $stateParams, ProductDetails, Favorites, $cordovaSocialSharing) {
 
   ProductDetails.getProductDetails($stateParams.productId).success(function (data) {
     $scope.ProductInfo = data.product_details;
     $scope.pathName = data.product_details[0].name;
+    $scope.shareImage = data.product_details[0].image;
   });  
   $scope.favoritesService = Favorites;
   
   $scope.$watch(function () { return Favorites.getFavoriteId($stateParams.productId); }, function (newVal, oldVal) {
     if (typeof newVal !== 'undefined') {
-        $scope.isFavorite = Favorites.getFavoriteId($stateParams.productId);
+      $scope.isFavorite = Favorites.getFavoriteId($stateParams.productId);
     }
   });
+  
+  $scope.shareAnywhere = function() {
+    $cordovaSocialSharing.share("Swift-mob-App", "The smart application you need!", $scope.shareImage, "http://www.softways.gr");
+  };
 })
 
 .controller('FavoritesCtrl', function ($scope, Favorites) {

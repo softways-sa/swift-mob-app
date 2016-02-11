@@ -8,7 +8,7 @@
         <h2>{{product.name}} - <span class="price">{{product.price}} €</span></h2>
         <div class="row">
           <div class="col col-50">
-            <button class="button button-block button-light" ng-click=""><i class="ion-android-share-alt"></i></button>            
+            <button class="button button-block button-light" ng-click="shareAnywhere()"><i class="ion-android-share-alt"></i></button>            
           </div>
           <div class="col col-50">
             <button class="button button-block button-light heart" ng-class="{heart: isFavorite===true,heart2: isFavorite===false}" ng-click="favoritesService.searchFavorites({{product.id}},'{{product.name}}','{{product.image}}','{{product.description}}',{{product.price}});"><i class="ion-android-favorite-outline"></i></button>
