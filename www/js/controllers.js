@@ -120,7 +120,7 @@ angular.module('starter.controllers', [])
   $scope._list = [];
   $scope.list = [];
   $scope.items = [];
-  var result = true;
+  $scope.result = true;
   var from = 0;
   /**$scope.populateList = function () {
     var limit = from + 9;
@@ -142,24 +142,14 @@ angular.module('starter.controllers', [])
     }
     $scope.$broadcast('scroll.infiniteScrollComplete');
   };**/
-
-  $scope.canWeLoadMoreContent = function () {
-    if ($scope.items.length > $scope.list.length - 1) {
-      var result = false;
-      console.log(result);
-    } 
-    else result = true;
-    return result;
-  };
+  
   //$scope.populateList();
   
   var filterBarInstance;
 
   $scope.getItems = function () {
-
-    
     var limit = from + 9;
-    if (result !== false) {
+    if ($scope.result !== false) {
       ListingPage.getProducts($scope.categoryId).success(function (data) {
         $scope.list = data.products;
         for (var i = from; i <= limit; i++) {
@@ -176,9 +166,6 @@ angular.module('starter.controllers', [])
       });
     }
     $scope.$broadcast('scroll.infiniteScrollComplete');
-    
-    
-    
   };
 
   $scope.getItems();
@@ -189,8 +176,11 @@ angular.module('starter.controllers', [])
       update: function (filteredItems, filterText) {
         $scope.items = filteredItems;
         if (filterText) {
-          console.log(filterText);
         }
+        /**if ($scope.items.length < $scope.list.length - 1 && filterText !== "") {
+          $scope.result = false;
+          return $scope.result;
+        } **/
       }
     });
   };
@@ -205,6 +195,14 @@ angular.module('starter.controllers', [])
       getItems();
       $scope.$broadcast('scroll.refreshComplete');
     }, 1000);
+  };
+
+  $scope.canWeLoadMoreContent = function () {
+    if ($scope.items.length > $scope.list.length - 1) {
+      $scope.result = false;
+    } 
+    else $scope.result = true;
+    return $scope.result;
   };
 })
 
