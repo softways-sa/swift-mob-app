@@ -108,8 +108,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ListingCtrl', function ($scope, $stateParams, ListingPage) {
-
+.controller('ListingCtrl', function ($scope, $stateParams, ListingPage, $timeout, $ionicFilterBar) {
+      
   $scope.categoryId = $stateParams.categoryId;
   $scope.ListingCatalog = [];
   ListingPage.getSubCategories($scope.categoryId).success(function (data) {
@@ -150,6 +150,42 @@ angular.module('starter.controllers', [])
     return result;
   };
   $scope.populateList();
+  
+  var filterBarInstance;
+
+  function getItems() {
+    var items = [];
+    ListingPage.getProducts($scope.categoryId).success(function (data) {
+      $scope.list = data.products;
+      $scope.items = $scope.list;
+    });
+  }
+
+  getItems();
+
+  $scope.showFilterBar = function () {
+    filterBarInstance = $ionicFilterBar.show({
+      items: $scope.items,
+      update: function (filteredItems, filterText) {
+        $scope.items = filteredItems;
+        if (filterText) {
+          console.log(filterText);
+        }
+      }
+    });
+  };
+
+  $scope.refreshItems = function () {
+    if (filterBarInstance) {
+      filterBarInstance();
+      filterBarInstance = null;
+    }
+
+    $timeout(function () {
+      getItems();
+      $scope.$broadcast('scroll.refreshComplete');
+    }, 1000);
+  };
 })
 
 .factory('ProductDetails', function ($http) {

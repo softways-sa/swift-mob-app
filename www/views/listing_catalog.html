@@ -2,7 +2,39 @@
   <ion-nav-title>
     {{pathName}}
   </ion-nav-title>
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+    </button>
+  </ion-nav-buttons>
   <ion-content>
+    
+    
+    
+    <ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="refreshItems()">
+    </ion-refresher>
+
+    <ion-list>
+      <ion-item ng-repeat="item2 in items" >
+        <div class="row" ng-if="$even">
+          <div class="col col-50" ng-repeat="item2 in [items[$index],items[$index + 1]]">
+            <div class="list card" ng-show="item2.name">
+              <div class="item item-body">
+                <a href="#/app/product/{{item2.id}}" style="text-decoration: none;">
+                  <div class="item-image"><img class="" ng-src="{{item2.image}}" alt=""></div>
+                  <h2>{{item2.name}}</h2>
+                  <p>{{item2.price}}</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+
+    <div ng-if="items !== undefined && !items.length" class="no-results">
+      <p>No Results</p>
+    </div>    
+    <!--
     <div class="list">
       <a ng-repeat="category in ListingCatalog" class="item item-thumbnail-left" href="#/app/listing/{{category.id}}">
         <img ng-src="{{category.image}}" alt="">
@@ -12,24 +44,25 @@
     </div>
     <div style="text-align: center;"><h2>All Items</h2></div>
     <div ng-repeat="product in _list">
-    <div class="row" ng-if="$even">
-      <div class="col col-50" ng-repeat="item in [_list[$index],_list[$index + 1]]">
-        <div class="list card" ng-show="item.name">
-          <div class="item item-body">
-            <a href="#/app/product/{{item.id}}" style="text-decoration: none;">
-              <div class="item-image"><img class="" ng-src="{{item.image}}" alt=""></div>
-              <h2>{{item.name}}</h2>
-              <p>{{item.price}}</p>
-            </a>
+      <div class="row" ng-if="$even">
+        <div class="col col-50" ng-repeat="item in [_list[$index],_list[$index + 1]]">
+          <div class="list card" ng-show="item.name">
+            <div class="item item-body">
+              <a href="#/app/product/{{item.id}}" style="text-decoration: none;">
+                <div class="item-image"><img class="" ng-src="{{item.image}}" alt=""></div>
+                <h2>{{item.name}}</h2>
+                <p>{{item.price}}</p>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
     <ion-infinite-scroll 
-            ng-if="canWeLoadMoreContent()"
-            on-infinite="populateList()"  
-            distance="1%">
+      ng-if="canWeLoadMoreContent()"
+      on-infinite="populateList()"  
+      distance="1%">
     </ion-infinite-scroll> 
+    -->
   </ion-content>
 </ion-view>
