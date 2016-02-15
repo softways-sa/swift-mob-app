@@ -30,6 +30,11 @@
         </div>
       </ion-item>
     </ion-list>
+    <ion-infinite-scroll 
+      ng-if="canWeLoadMoreContent()"
+      on-infinite="getItems()"  
+      distance="1%">
+    </ion-infinite-scroll> 
 
     <div ng-if="items !== undefined && !items.length" class="no-results">
       <p>No Results</p>

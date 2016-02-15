@@ -119,9 +119,10 @@ angular.module('starter.controllers', [])
 
   $scope._list = [];
   $scope.list = [];
+  $scope.items = [];
   var result = true;
   var from = 0;
-  $scope.populateList = function () {
+  /**$scope.populateList = function () {
     var limit = from + 9;
     if (result !== false) {
       ListingPage.getProducts($scope.categoryId).success(function (data) {
@@ -140,28 +141,47 @@ angular.module('starter.controllers', [])
       });
     }
     $scope.$broadcast('scroll.infiniteScrollComplete');
-  };
+  };**/
 
   $scope.canWeLoadMoreContent = function () {
-    if ($scope._list.length > $scope.list.length - 1) {
+    if ($scope.items.length > $scope.list.length - 1) {
       var result = false;
-    } else
-      result = true;
+      console.log(result);
+    } 
+    else result = true;
     return result;
   };
-  $scope.populateList();
+  //$scope.populateList();
   
   var filterBarInstance;
 
-  function getItems() {
-    var items = [];
-    ListingPage.getProducts($scope.categoryId).success(function (data) {
-      $scope.list = data.products;
-      $scope.items = $scope.list;
-    });
-  }
+  $scope.getItems = function () {
 
-  getItems();
+    
+    var limit = from + 9;
+    if (result !== false) {
+      ListingPage.getProducts($scope.categoryId).success(function (data) {
+        $scope.list = data.products;
+        for (var i = from; i <= limit; i++) {
+          if (i < $scope.list.length) {
+            $scope.items.push({
+              id: $scope.list[i].id,
+              image: $scope.list[i].image,
+              name: $scope.list[i].name,
+              description: $scope.list[i].description
+            });
+            from = i + 1;
+          }
+        }
+      });
+    }
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+    
+    
+    
+  };
+
+  $scope.getItems();
 
   $scope.showFilterBar = function () {
     filterBarInstance = $ionicFilterBar.show({
