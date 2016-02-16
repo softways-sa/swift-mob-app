@@ -1,6 +1,6 @@
 <ion-view>
   <ion-nav-title>
-    {{pathName}}
+    COSMOSCENTER <!--{{pathName}}-->
   </ion-nav-title>
   <ion-nav-buttons side="secondary">
     <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
@@ -8,21 +8,35 @@
   </ion-nav-buttons>
   <ion-content>
     
-    
+    <div class="listing-title"><h1>{{pathName}}</h1></div>
+    <div class="list">
+      <a ng-repeat="category in ListingCatalog" class="item item-thumbnail-left item-icon-right" href="#/app/listing/{{category.id}}">
+        <img ng-src="{{category.image}}" alt="">
+        <h2>{{category.name}}</h2>
+        <p>{{category.description}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+    </div>
+    <div class="top-items"><h2>All Items</h2></div>
     
     <ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="refreshItems()">
     </ion-refresher>
 
     <ion-list>
-      <ion-item ng-repeat="item2 in items" >
+      <ion-item ng-repeat="item2 in items" style="background-color: #f5f5f5;">
         <div class="row" ng-if="$even">
           <div class="col col-50" ng-repeat="item2 in [items[$index],items[$index + 1]]">
             <div class="list card" ng-show="item2.name">
               <div class="item item-body">
                 <a href="#/app/product/{{item2.id}}" style="text-decoration: none;">
                   <div class="item-image"><img class="" ng-src="{{item2.image}}" alt=""></div>
-                  <h2>{{item2.name}}</h2>
-                  <p>{{item2.price}}</p>
+                  <div class="item-name"><h2>{{item2.name}}</h2></div>
+                  <div class="item-info">
+                    <div class="row" >
+                    <div class="item-description col-80">{{item2.description}}</div>
+                    <div class="item-price col-20">{{item2.price}}</div>
+                    </div>
+                  </div>
                 </a>
               </div>
             </div>
@@ -40,14 +54,6 @@
       <p>No Results</p>
     </div>    
     <!--
-    <div class="list">
-      <a ng-repeat="category in ListingCatalog" class="item item-thumbnail-left" href="#/app/listing/{{category.id}}">
-        <img ng-src="{{category.image}}" alt="">
-        <h2>{{category.name}}</h2>
-        <p>{{category.description}}</p>
-      </a>
-    </div>
-    <div style="text-align: center;"><h2>All Items</h2></div>
     <div ng-repeat="product in _list">
       <div class="row" ng-if="$even">
         <div class="col col-50" ng-repeat="item in [_list[$index],_list[$index + 1]]">

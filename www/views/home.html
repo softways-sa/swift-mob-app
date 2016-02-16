@@ -1,10 +1,11 @@
-<ion-view view-title="Home">
+<ion-view view-title="COSMOSCENTER">
   <ion-content>
     <div class="list">
-      <a ng-repeat="category in _list" class="item item-thumbnail-left" href="#/app/listing/{{category.id}}">
+      <a ng-repeat="category in _list" class="item item-thumbnail-left  item-icon-right" href="#/app/listing/{{category.id}}">
         <img ng-src="{{category.image}}" alt="">
         <h2>{{category.name}}</h2>
         <p>{{category.description}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
       </a>
     </div>
     <ion-infinite-scroll 

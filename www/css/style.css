@@ -10,3 +10,34 @@
   text-decoration: underline;
   color:#4275c3 !important;
 }
+.listing-title {
+  padding: 15px;
+}
+.listing-title h1{
+  color:#323232 !important;
+}
+.top-items {
+  text-align: center;
+}
+.top-items h2{
+  color:#323232 !important;
+}
+.item-name {
+  padding: 8px 8px 3px 8px;
+}
+.item-name h2{
+  color: #323232;
+}
+.item-info {
+  padding: 0px 8px 3px 8px;
+  color: #a7a7a7;
+}
+.item-info .row{
+  padding-left: 0px;
+  color: #a7a7a7;
+}
+.item-price {
+  color: #87c75a;
+  padding-top: 0px !important;
+  text-align: right;
+}

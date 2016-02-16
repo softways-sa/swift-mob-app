@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function ($scope, $ionicModal, $timeout, Favorites) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -39,6 +39,9 @@ angular.module('starter.controllers', [])
   //$scope.closeLogin();
   //}, 1000);
   //};
+  
+  $scope.favorites = Favorites.getFavorites();
+  $scope.total = $scope.favorites.length;
 })
 
 
@@ -158,7 +161,8 @@ angular.module('starter.controllers', [])
               id: $scope.list[i].id,
               image: $scope.list[i].image,
               name: $scope.list[i].name,
-              description: $scope.list[i].description
+              description: $scope.list[i].description,
+              price: $scope.list[i].price
             });
             from = i + 1;
           }
