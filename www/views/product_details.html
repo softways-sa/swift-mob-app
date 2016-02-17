@@ -3,17 +3,9 @@
     {{pathName}}
   </ion-nav-title>
   <ion-content>
-    <div class="list card" ng-repeat="product in ProductInfo">
-      <div class="item item-avatar">
-        <h2>{{product.name}} - <span class="price">{{product.price}} €</span></h2>
-        <div class="row">
-          <div class="col col-50">
-            <button class="button button-block button-light" ng-click="shareAnywhere()"><i class="ion-android-share-alt"></i></button>            
-          </div>
-          <div class="col col-50">
-            <button class="button button-block button-light heart" ng-class="{heart: isFavorite===true,heart2: isFavorite===false}" ng-click="favoritesService.searchFavorites({{product.id}},'{{product.name}}','{{product.image}}','{{product.description}}',{{product.price}});"><i class="ion-android-favorite-outline"></i></button>
-          </div>
-        </div>
+    <div class="list card product_card" ng-repeat="product in ProductInfo">
+      <div class="item-name">
+        <h2>{{product.name}}</h2>
       </div>
       <div class="item item-body">
         <div style="text-align: center;">
@@ -26,9 +18,20 @@
             <ks-swiper-pagination></ks-swiper-pagination>
           </ks-swiper-container>
         </div>
-        <p>
+        <p class="item-description">
           {{product.description}}
         </p>
+        <div class="row">
+          <div class="col col-35 product-bottom">
+            <button class="button button-block button-light" ng-click="shareAnywhere()"><i class="ion-android-share-alt"></i></button>            
+          </div>
+          <div class="col col-35 product-bottom">
+            <button class="button button-block button-light heart" ng-class="{heart: isFavorite===true,heart2: isFavorite===false}" ng-click="favoritesService.searchFavorites({{product.id}},'{{product.name}}','{{product.image}}','{{product.description}}',{{product.price}});"><i class="ion-android-favorite-outline"></i></button>
+          </div>
+          <div class="col col-30 product-bottom">
+        <h2><span class="item-price"> €{{product.price}} EUR</span></h2>
+          </div>
+        </div>
         <p>
           <!-- Plugin for system browser source: https://blog.nraboy.com/2014/07/launch-external-urls-ionicframework/ -->   
           <a class="item" href="#" onclick="window.open('http://www.softways.gr', '_system', 'location=yes'); return false;">

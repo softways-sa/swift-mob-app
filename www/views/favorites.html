@@ -8,11 +8,19 @@
       <div class="col col-50" ng-repeat="favorite in [favorites[$index],favorites[$index + 1]]">
         <div class="list card" ng-show="favorite.name">
           <div class="item item-body">
-            <button class="button button-block button-light heart" ng-class="{heart: isFavorite===true,heart2: isFavorite===false}" ng-click="favoritesServices.deleteFavorites({{favorite.id}});"><i class="ion-android-favorite-outline"></i></button>
             <a href="#/app/product/{{favorite.id}}" style="text-decoration: none;">
               <div class="item-image"><img class="" ng-src="{{favorite.image}}" alt=""></div>
-              <h2>{{favorite.name}}</h2>
-              <p>{{favorite.price}}</p>
+              <div class="row">
+              <div class="col-80">
+              <div class="item-name"><h2>{{favorite.name}}</h2></div>
+              <div class="item-info">
+                  <div class="item-price-favorites">{{favorite.price}}</div>
+              </div>
+              </div>
+              <div class="col-20">
+                  <button class="button button-block button-light heart" ng-class="{heart: isFavorite===true,heart2: isFavorite===false}" ng-click="favoritesServices.deleteFavorites({{favorite.id}});"><i class="ion-android-favorite-outline"></i></button>
+              </div>
+              </div>
             </a>
           </div>
         </div>

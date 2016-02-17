@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function ($scope, $ionicModal, $timeout, Favorites) {
+.controller('AppCtrl', function ($scope, $ionicModal, $timeout, Favorites, $state) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -42,6 +42,11 @@ angular.module('starter.controllers', [])
   
   $scope.favorites = Favorites.getFavorites();
   $scope.total = $scope.favorites.length;
+  if ($scope.total > 0) {
+    $scope.show = true;
+  }
+  console.log($scope.total);
+  $state.go($state.current, {}, { reload: true });
 })
 
 
@@ -111,7 +116,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ListingCtrl', function ($scope, $stateParams, ListingPage, $timeout, $ionicFilterBar) {
+.controller('ListingCtrl', function ($scope, $stateParams, ListingPage) {
       
   $scope.categoryId = $stateParams.categoryId;
   $scope.ListingCatalog = [];
@@ -119,13 +124,11 @@ angular.module('starter.controllers', [])
     $scope.ListingCatalog = data.subcategories;
     $scope.pathName = data.pathname[0].name;
   });
-
   $scope._list = [];
   $scope.list = [];
-  $scope.items = [];
-  $scope.result = true;
+  var result = true;
   var from = 0;
-  /**$scope.populateList = function () {
+  $scope.populateList = function () {
     var limit = from + 9;
     if (result !== false) {
       ListingPage.getProducts($scope.categoryId).success(function (data) {
@@ -136,32 +139,6 @@ angular.module('starter.controllers', [])
               id: $scope.list[i].id,
               image: $scope.list[i].image,
               name: $scope.list[i].name,
-              description: $scope.list[i].description
-            });
-            from = i + 1;
-          }
-        }
-      });
-    }
-    $scope.$broadcast('scroll.infiniteScrollComplete');
-  };**/
-  
-  //$scope.populateList();
-  
-  var filterBarInstance;
-
-  $scope.getItems = function () {
-    var limit = from + 9;
-    if ($scope.result !== false) {
-      ListingPage.getProducts($scope.categoryId).success(function (data) {
-        $scope.list = data.products;
-        for (var i = from; i <= limit; i++) {
-          if (i < $scope.list.length) {
-            $scope.items.push({
-              id: $scope.list[i].id,
-              image: $scope.list[i].image,
-              name: $scope.list[i].name,
-              description: $scope.list[i].description,
               price: $scope.list[i].price
             });
             from = i + 1;
@@ -172,42 +149,14 @@ angular.module('starter.controllers', [])
     $scope.$broadcast('scroll.infiniteScrollComplete');
   };
 
-  $scope.getItems();
-
-  $scope.showFilterBar = function () {
-    filterBarInstance = $ionicFilterBar.show({
-      items: $scope.items,
-      update: function (filteredItems, filterText) {
-        $scope.items = filteredItems;
-        if (filterText) {
-        }
-        /**if ($scope.items.length < $scope.list.length - 1 && filterText !== "") {
-          $scope.result = false;
-          return $scope.result;
-        } **/
-      }
-    });
-  };
-
-  $scope.refreshItems = function () {
-    if (filterBarInstance) {
-      filterBarInstance();
-      filterBarInstance = null;
-    }
-
-    $timeout(function () {
-      getItems();
-      $scope.$broadcast('scroll.refreshComplete');
-    }, 1000);
-  };
-
   $scope.canWeLoadMoreContent = function () {
-    if ($scope.items.length > $scope.list.length - 1) {
-      $scope.result = false;
-    } 
-    else $scope.result = true;
-    return $scope.result;
+    if ($scope._list.length > $scope.list.length - 1) {
+      var result = false;
+    } else
+      result = true;
+    return result;
   };
+  $scope.populateList();
 })
 
 .factory('ProductDetails', function ($http) {
@@ -305,7 +254,7 @@ angular.module('starter.controllers', [])
             break;
           }
         }
-        $state.go($state.current, {}, { reload: true });
+        //$state.go($state.current, {}, { reload: true });
 
       },
       clearFavorites: function () {  

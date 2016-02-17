@@ -1,6 +1,6 @@
 /* Empty. Add your own CSS if you like */
 .price{
-  color:#4275c3;
+  color:#a7a7a7;
 }
 .heart {
   text-decoration: underline;
@@ -8,8 +8,10 @@
 }
 .heart2 {
   text-decoration: underline;
-  color:#4275c3 !important;
+  color:#DBDBDB !important;
 }
+.ion-android-favorite-outline:before {
+  font-size:40px; }
 .listing-title {
   padding: 15px;
 }
@@ -32,12 +34,34 @@
   padding: 0px 8px 3px 8px;
   color: #a7a7a7;
 }
+.item-description {
+  padding: 8px 8px 3px 8px;
+  color: #a7a7a7;
+}
 .item-info .row{
   padding-left: 0px;
   color: #a7a7a7;
 }
 .item-price {
-  color: #87c75a;
+  color: #323232;
   padding-top: 0px !important;
   text-align: right;
+}
+.item-price-favorites {
+  color: #323232;
+  padding-top: 0px !important;
+  text-align: left;
+}
+.item-body {
+  color: #323232;
+  padding-top: 0px !important;
+}
+.product-bottom {
+  text-align: center;
+} 
+.ion-nav-title{
+  text-align: center;
+}
+.product_card{
+  box-shadow: none;
 }

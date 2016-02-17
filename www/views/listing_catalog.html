@@ -2,10 +2,12 @@
   <ion-nav-title>
     COSMOSCENTER <!--{{pathName}}-->
   </ion-nav-title>
+  <!--
   <ion-nav-buttons side="secondary">
     <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
     </button>
   </ion-nav-buttons>
+  -->
   <ion-content>
     
     <div class="listing-title"><h1>{{pathName}}</h1></div>
@@ -18,7 +20,7 @@
       </a>
     </div>
     <div class="top-items"><h2>All Items</h2></div>
-    
+    <!--
     <ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="refreshItems()">
     </ion-refresher>
 
@@ -52,8 +54,8 @@
 
     <div ng-if="items !== undefined && !items.length" class="no-results">
       <p>No Results</p>
-    </div>    
-    <!--
+    </div> 
+    -->
     <div ng-repeat="product in _list">
       <div class="row" ng-if="$even">
         <div class="col col-50" ng-repeat="item in [_list[$index],_list[$index + 1]]">
@@ -61,8 +63,12 @@
             <div class="item item-body">
               <a href="#/app/product/{{item.id}}" style="text-decoration: none;">
                 <div class="item-image"><img class="" ng-src="{{item.image}}" alt=""></div>
-                <h2>{{item.name}}</h2>
-                <p>{{item.price}}</p>
+                <div class="item-name"><h2>{{item.name}}</h2></div>
+                <div class="item-info">
+                  <div class="row" >
+                    <div class="item-price">{{item.price}}</div>
+                  </div>
+                </div>
               </a>
             </div>
           </div>
@@ -74,6 +80,5 @@
       on-infinite="populateList()"  
       distance="1%">
     </ion-infinite-scroll> 
-    -->
   </ion-content>
 </ion-view>

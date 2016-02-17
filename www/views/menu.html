@@ -25,7 +25,7 @@
         <ion-item menu-close item-thumbnail-left href="#/app/favorites">
           <img style="vertical-align:middle" ng-src="img/menu2.png">
           Αγαπημένα
-          <span class="badge badge-stable">{{total}}</span>
+          <span class="badge badge-stable"><div ng-if="show">{{total}}</div></span>
         </ion-item>
         <ion-item menu-close href="#/app/favorites">
           <img style="vertical-align:middle" ng-src="img/menu3.png">
