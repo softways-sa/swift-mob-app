@@ -65,3 +65,7 @@
 .product_card{
   box-shadow: none;
 }
+.nav-bar-title{
+  text-align: center;
+  color: #323232;
+}

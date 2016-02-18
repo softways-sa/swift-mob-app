@@ -55,7 +55,7 @@ angular.module('starter.controllers', [])
   return{
     getCategories: function () {
       return $http({
-        url: 'http://www.webaction.gr/demo/request/swift_home.php',
+        url: 'http://qualito.softways.gr/api/v1/categories.do',
         method: 'GET'
       });
     }
@@ -72,23 +72,12 @@ angular.module('starter.controllers', [])
     var limit = from + 9;
     if (result !== false) {
       CategoryListing.getCategories().success(function (data) {
-        $scope.list = data.categories;
-        for (var i = from; i <= limit; i++) {
-          if (i < $scope.list.length) {
-            $scope._list.push({
-              id: $scope.list[i].id,
-              image: $scope.list[i].image,
-              name: $scope.list[i].name,
-              description: $scope.list[i].description
-            });
-            from = i + 1;
-          }
-        }
+        $scope._list = data.categories;
       });
     }
     $scope.$broadcast('scroll.infiniteScrollComplete');
   };
-
+  
   $scope.canWeLoadMoreContent = function () {
     if ($scope._list.length > $scope.list.length - 1) {
       var result = false;
@@ -107,10 +96,10 @@ angular.module('starter.controllers', [])
         method: 'GET'
       });
     },
-    getProducts: function (categoryId) {
+    getProducts: function (categoryId, from) {
       return $http({
-        url: 'http://www.webaction.gr/demo/request/swift_products2.php?category_id=' + categoryId,
-        method: 'GET'
+        url: 'http://qualito.softways.gr/api/v1/products.do?action1=SEARCH&catId=' + categoryId + '&start=' + from,
+        method: 'GET'        
       });
     }
   };
@@ -137,11 +126,12 @@ angular.module('starter.controllers', [])
           if (i < $scope.list.length) {
             $scope._list.push({
               id: $scope.list[i].id,
-              image: $scope.list[i].image,
+              image: $scope.list[i].thumb,
               name: $scope.list[i].name,
               price: $scope.list[i].price
             });
             from = i + 1;
+            console.log(from);
           }
         }
       });
@@ -163,7 +153,7 @@ angular.module('starter.controllers', [])
   return{
     getProductDetails: function (productId) {
       return $http({
-        url: 'http://www.webaction.gr/demo/request/swift_product.php?product_id=' + productId,
+        url: 'http://qualito.softways.gr/api/v1/products.do?id=' + productId,
         method: 'GET'
       });
     }
@@ -281,9 +271,9 @@ angular.module('starter.controllers', [])
 .controller('ProductCtrl', function ($scope, $stateParams, ProductDetails, Favorites, $cordovaSocialSharing) {
 
   ProductDetails.getProductDetails($stateParams.productId).success(function (data) {
-    $scope.ProductInfo = data.product_details;
-    $scope.pathName = data.product_details[0].name;
-    $scope.shareImage = data.product_details[0].image;
+    $scope.ProductInfo = data.product;
+    $scope.pathName = data.product.name;
+    $scope.shareImage = data.product.thumb;
   });  
   $scope.favoritesService = Favorites;
   
