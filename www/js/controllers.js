@@ -65,41 +65,26 @@ angular.module('starter.controllers', [])
 .controller('HomeCtrl', function ($scope, CategoryListing) {
   
   $scope._list = [];
-  $scope.list = [];
-  var result = true;
-  var from = 0;
-  $scope.populateList = function () {
-    var limit = from + 9;
-    if (result !== false) {
-      CategoryListing.getCategories().success(function (data) {
+  CategoryListing.getCategories().success(function (data) {
         $scope._list = data.categories;
       });
-    }
-    $scope.$broadcast('scroll.infiniteScrollComplete');
-  };
-  
-  $scope.canWeLoadMoreContent = function () {
-    if ($scope._list.length > $scope.list.length - 1) {
-      var result = false;
-    } else
-      result = true;
-    return result;
-  };
-  $scope.populateList();
 })
 
 .factory('ListingPage', function ($http) {
+  var BASE_URL = "http://qualito.softways.gr/api/v1/products.do?action1=SEARCH&catId=";
+	var items = [];
+  
   return{
     getSubCategories: function (categoryId) {
       return $http({
-        url: 'http://www.webaction.gr/demo/request/swift_listing.php?category_id=' + categoryId,
+        url: 'http://qualito.softways.gr/api/v1/categories.do?id=' + categoryId,
         method: 'GET'
       });
     },
-    getProducts: function (categoryId, from) {
-      return $http({
-        url: 'http://qualito.softways.gr/api/v1/products.do?action1=SEARCH&catId=' + categoryId + '&start=' + from,
-        method: 'GET'        
+    getProducts: function(categoryId, from){
+      return $http.get(BASE_URL + categoryId + '&start=' + from).then(function(response){
+        items = response.data.products;
+        return items;
       });
     }
   };
@@ -109,44 +94,30 @@ angular.module('starter.controllers', [])
       
   $scope.categoryId = $stateParams.categoryId;
   $scope.ListingCatalog = [];
+  $scope.pathName = [];
   ListingPage.getSubCategories($scope.categoryId).success(function (data) {
-    $scope.ListingCatalog = data.subcategories;
-    $scope.pathName = data.pathname[0].name;
+    $scope.ListingCatalog = data.categories;
+    $scope.pathName = data.parent.name;
   });
-  $scope._list = [];
-  $scope.list = [];
-  var result = true;
+  
+  $scope.items = [];
+  $scope.mikos = [];
+  $scope.newItems = [];
   var from = 0;
-  $scope.populateList = function () {
-    var limit = from + 9;
-    if (result !== false) {
-      ListingPage.getProducts($scope.categoryId).success(function (data) {
-        $scope.list = data.products;
-        for (var i = from; i <= limit; i++) {
-          if (i < $scope.list.length) {
-            $scope._list.push({
-              id: $scope.list[i].id,
-              image: $scope.list[i].thumb,
-              name: $scope.list[i].name,
-              price: $scope.list[i].price
-            });
-            from = i + 1;
-            console.log(from);
-          }
-        }
+
+  $scope.loadMore = function(){
+    ListingPage.getProducts($scope.categoryId,from).then(function(items) {
+      $scope.size = items;
+      $scope.items = $scope.items.concat(items);
+      from = from + 24;
+      if ( $scope.size.length < 24 ) {
+      $scope.noMoreItemsAvailable = true;
+      }
+      $scope.$broadcast('scroll.infiniteScrollComplete');
       });
-    }
-    $scope.$broadcast('scroll.infiniteScrollComplete');
   };
 
-  $scope.canWeLoadMoreContent = function () {
-    if ($scope._list.length > $scope.list.length - 1) {
-      var result = false;
-    } else
-      result = true;
-    return result;
-  };
-  $scope.populateList();
+     
 })
 
 .factory('ProductDetails', function ($http) {
