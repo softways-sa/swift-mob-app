@@ -1,7 +1,12 @@
 <ion-view cache-view="false">
-  <ion-nav-title>
+  <ion-nav-title class="ion-nav-title">
     {{pathName}}
-  </ion-nav-title>
+  </ion-nav-title>  
+  <ion-nav-buttons side="right">
+    <a class="ion-home-color" ng-href="#/app/home">
+      <i class="ion-home"></i>
+    </a>
+  </ion-nav-buttons>
   <ion-content>
     <div class="list card product_card" >
       <div class="item-name">
@@ -34,7 +39,7 @@
         </div>
         <p>
           <!-- Plugin for system browser source: https://blog.nraboy.com/2014/07/launch-external-urls-ionicframework/ -->   
-          <a class="item" href="#" onclick="window.open('http://www.softways.gr', '_system', 'location=yes'); return false;">
+          <a class="item" href="#" onclick="window.open({{ProductInfo.url}}, '_system', 'location=yes'); return false;">
             <button class="button button-block button-stable">
               Read more on web site
             </button>

@@ -207,9 +207,9 @@ angular.module('starter.controllers', [])
       },
       deleteFavorites: function (favoriteId) {  
         var productId = favoriteId;   
-        var favorites = (JSON.parse($localstorage.getItem('favorites')) || []); 
+        var favorites = (JSON.parse($localstorage.getItem('favorites')) || []);
         for (var i=0; i < favorites.length; i++) {
-          if (favorites[i].id === productId) {
+          if (favorites[i].id == productId) { 
             favorites.splice(i,1);
             $localstorage.setObject('favorites', favorites);
             break;
@@ -245,6 +245,7 @@ angular.module('starter.controllers', [])
     $scope.ProductInfo = data.product;
     $scope.pathName = data.product.name;
     $scope.shareImage = data.product.thumb;
+    $scope.shareUrl = data.product.url;
   });  
   $scope.favoritesService = Favorites;
   
@@ -255,7 +256,7 @@ angular.module('starter.controllers', [])
   });
   
   $scope.shareAnywhere = function() {
-    $cordovaSocialSharing.share("Swift-mob-App", "The smart application you need!", $scope.shareImage, "http://www.softways.gr");
+    $cordovaSocialSharing.share("Swift-mob-App", "The smart application you need!", $scope.shareImage, $scope.shareUrl);
   };
 })
 

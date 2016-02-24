@@ -1,10 +1,13 @@
 <ion-view>
-  <ion-nav-title>
+  <ion-nav-title  align-title="center">
     COSMOSCENTER <!--Company's Name-->
-  </ion-nav-title>
-
-  <ion-content>
-    
+  </ion-nav-title>  
+  <ion-nav-buttons side="right">
+    <a class="ion-home-color" ng-href="#/app/home">
+      <i class="ion-home"></i>
+    </a>
+  </ion-nav-buttons>
+  <ion-content>    
     <div class="listing-title"><h1>{{pathName}}</h1></div>
     <div class="list">
       <a ng-repeat="category in ListingCatalog" class="item item-thumbnail-left item-icon-right" href="#/app/listing/{{category.id}}">
@@ -39,6 +42,5 @@
       </ion-item>
     </ion-list>
     <ion-infinite-scroll ng-if="!noMoreItemsAvailable"  on-infinite="loadMore()" distance="5%"></ion-infinite-scroll>
-
   </ion-content>
 </ion-view>

@@ -12,6 +12,10 @@
 }
 .ion-android-favorite-outline:before {
   font-size:40px; }
+.ion-home {
+  font-size:40px; }
+.ion-home-color{
+  color: #323232; }
 .listing-title {
   padding: 15px;
 }
@@ -68,4 +72,7 @@
 .nav-bar-title{
   text-align: center;
   color: #323232;
+}
+.ion-nav-title{
+   text-align: center;
 }
