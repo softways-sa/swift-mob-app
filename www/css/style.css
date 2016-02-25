@@ -30,6 +30,11 @@
 }
 .item-name {
   padding: 8px 8px 3px 8px;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 50px;
+  max-height: 50px;
 }
 .item-name h2{
   color: #323232;
@@ -43,13 +48,14 @@
   color: #a7a7a7;
 }
 .item-info .row{
-  padding-left: 0px;
+  padding: 0px !important;
   color: #a7a7a7;
 }
 .item-price {
   color: #323232;
   padding-top: 0px !important;
-  text-align: right;
+  padding: 0px 8px 3px 8px;
+  text-align: left;
 }
 .item-price-favorites {
   color: #323232;

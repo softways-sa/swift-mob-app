@@ -100,10 +100,13 @@ angular.module('starter.controllers', [])
   $scope.categoryId = $stateParams.categoryId;
   $scope.ListingCatalog = [];
   $scope.pathName = [];
-  ListingPage.getSubCategories($scope.categoryId).success(function (data) {
-    $scope.ListingCatalog = data.categories;
-    $scope.pathName = data.parent.name;
-  });
+  //console.log($scope.searchTerm.length);
+  if ($scope.searchTerm == null){
+    ListingPage.getSubCategories($scope.categoryId).success(function (data) {
+      $scope.ListingCatalog = data.categories;
+      $scope.pathName = data.parent.name;
+    });
+  }
   
   $scope.items = [];
   $scope.mikos = [];
@@ -253,6 +256,16 @@ angular.module('starter.controllers', [])
     $scope.shareImage = data.product.thumb;
     $scope.shareUrl = data.product.url;
   });  
+  
+  $scope.openURL = function() {
+    try {
+        var URL = $scope.shareUrl;
+        window.open(URL, '_system', 'location=yes');
+    } catch (err) {
+        alert(err);
+    }
+}
+  
   $scope.favoritesService = Favorites;
   
   $scope.$watch(function () { return Favorites.getFavoriteId($stateParams.productId); }, function (newVal, oldVal) {

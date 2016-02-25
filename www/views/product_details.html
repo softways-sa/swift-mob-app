@@ -29,7 +29,7 @@
             <button class="button button-block button-light" ng-click="shareAnywhere()"><i class="ion-android-share-alt"></i></button>            
           </div>
           <div class="col col-35 product-bottom">
-            <button class="button button-block button-light heart"  ng-click="favoritesService.searchFavorites(ProductInfo.id,ProductInfo.name,ProductInfo.thumb,ProductInfo.description,ProductInfo.price);"><i class="ion-android-favorite-outline"></i></button>
+            <button class="button button-block button-light heart" ng-class="{heart: isFavorite===true,heart2: isFavorite===false}" ng-click="favoritesService.searchFavorites(ProductInfo.id,ProductInfo.name,ProductInfo.thumb,ProductInfo.description,ProductInfo.price);"><i class="ion-android-favorite-outline"></i></button>
           </div>
           <div class="col col-30 product-bottom">
         <h2><span class="item-price"> €{{ProductInfo.price}} EUR</span></h2>
@@ -37,7 +37,7 @@
         </div>
         <p>
           <!-- Plugin for system browser source: https://blog.nraboy.com/2014/07/launch-external-urls-ionicframework/ -->   
-          <a class="item" ng-href="{{ProductInfo.url}}" ng-click="window.open(this.href, '_system', 'location=yes');">
+          <a class="item" href="#" ng-click="openURL()">            
             <button class="button button-block button-stable">
               For more visit our web site
             </button>

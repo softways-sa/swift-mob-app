@@ -8,9 +8,9 @@
     </a>
   </ion-nav-buttons>
   <ion-content>    
-    <div class="listing-title"><h1>{{pathName}}</h1></div>
-    <p>Search Term: {{searchTerm}}</p>
-    <div class="list">
+    <div class="listing-title" ng-show="!searchTerm"><h1>{{pathName}}</h1></div>
+    <div ng-show="searchTerm"><h2>Search Term: {{searchTerm}}</h2></div>
+    <div class="list" ng-show="!searchTerm">
       <a ng-repeat="category in ListingCatalog" class="item item-thumbnail-left item-icon-right" href="#/app/listing/{{category.id}}">
         <img ng-src="{{category.image}}" alt="">
         <h2>{{category.name}}</h2>
@@ -29,10 +29,8 @@
                 <a href="#/app/product/{{item2.id}}" style="text-decoration: none;">
                   <div class="item-image"><img class="" ng-src="{{item2.thumb}}" alt=""></div>
                   <div class="item-info">
-                    <div class="row" >
-                    <div class="item-name col-80">{{item2.name}}</div>
-                    <div class="item-price col-20">{{item2.price}}</div>
-                    </div>
+                    <div class="item-name">{{item2.name}}</div>
+                    <div class="item-price">{{item2.price}}</div>
                   </div>
                 </a>
               </div>
