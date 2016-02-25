@@ -1,8 +1,19 @@
 <ion-view>
   <ion-nav-title>
-    COSMOSCENTER
-  </ion-nav-title>
+        COSMOCENTER
+    </ion-nav-title>
   <ion-content>
+    <form ng-submit="goToTab(searchTerm)">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="text" placeholder="Αναζήτηση" ng-model="searchTerm">
+        </label>
+        <button type="submit" class="button button-small">
+          Αναζήτηση
+        </button>
+      </div>
+    </form>
     <div class="list">
       <a ng-repeat="category in _list" class="item item-thumbnail-left  item-icon-right" href="#/app/listing/{{category.id}}">
         <img ng-src="{{category.image}}" alt="">

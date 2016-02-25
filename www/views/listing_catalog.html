@@ -1,5 +1,5 @@
 <ion-view>
-  <ion-nav-title  align-title="center">
+  <ion-nav-title>
     COSMOSCENTER <!--Company's Name-->
   </ion-nav-title>  
   <ion-nav-buttons side="right">
@@ -9,6 +9,7 @@
   </ion-nav-buttons>
   <ion-content>    
     <div class="listing-title"><h1>{{pathName}}</h1></div>
+    <p>Search Term: {{searchTerm}}</p>
     <div class="list">
       <a ng-repeat="category in ListingCatalog" class="item item-thumbnail-left item-icon-right" href="#/app/listing/{{category.id}}">
         <img ng-src="{{category.image}}" alt="">
@@ -27,10 +28,9 @@
               <div class="item item-body">
                 <a href="#/app/product/{{item2.id}}" style="text-decoration: none;">
                   <div class="item-image"><img class="" ng-src="{{item2.thumb}}" alt=""></div>
-                  <div class="item-name"><h2>{{item2.name}}</h2></div>
                   <div class="item-info">
                     <div class="row" >
-                    <div class="item-description col-80">{{item2.description}}</div>
+                    <div class="item-name col-80">{{item2.name}}</div>
                     <div class="item-price col-20">{{item2.price}}</div>
                     </div>
                   </div>

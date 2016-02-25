@@ -23,9 +23,7 @@
             <ks-swiper-pagination></ks-swiper-pagination>
           </ks-swiper-container>
         </div>
-        <p class="item-description">
-          {{ProductInfo.description}}
-        </p>
+        <div class="item-description" ng-bind-html="description"></div>
         <div class="row">
           <div class="col col-35 product-bottom">
             <button class="button button-block button-light" ng-click="shareAnywhere()"><i class="ion-android-share-alt"></i></button>            
@@ -39,9 +37,9 @@
         </div>
         <p>
           <!-- Plugin for system browser source: https://blog.nraboy.com/2014/07/launch-external-urls-ionicframework/ -->   
-          <a class="item" href="#" onclick="window.open({{ProductInfo.url}}, '_system', 'location=yes'); return false;">
+          <a class="item" ng-href="{{ProductInfo.url}}" ng-click="window.open(this.href, '_system', 'location=yes');">
             <button class="button button-block button-stable">
-              Read more on web site
+              For more visit our web site
             </button>
           </a>
         </p>

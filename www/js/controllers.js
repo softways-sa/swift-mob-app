@@ -45,7 +45,6 @@ angular.module('starter.controllers', [])
   if ($scope.total > 0) {
     $scope.show = true;
   }
-  console.log($scope.total);
   $state.go($state.current, {}, { reload: true });
 })
 
@@ -62,7 +61,12 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('HomeCtrl', function ($scope, CategoryListing) {
+.controller('HomeCtrl', function ($scope, CategoryListing, $state) {
+  $scope.goToTab = function(searchTerm) {
+    $state.go('app.listing', {
+      searchTerm: searchTerm
+    });
+  };
   
   $scope._list = [];
   CategoryListing.getCategories().success(function (data) {
@@ -91,7 +95,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ListingCtrl', function ($scope, $stateParams, ListingPage) {
-      
+  
+  $scope.searchTerm = $stateParams.searchTerm;
   $scope.categoryId = $stateParams.categoryId;
   $scope.ListingCatalog = [];
   $scope.pathName = [];
@@ -244,6 +249,7 @@ angular.module('starter.controllers', [])
   ProductDetails.getProductDetails($stateParams.productId).success(function (data) {
     $scope.ProductInfo = data.product;
     $scope.pathName = data.product.name;
+    $scope.description = data.product.description;
     $scope.shareImage = data.product.thumb;
     $scope.shareUrl = data.product.url;
   });  

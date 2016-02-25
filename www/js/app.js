@@ -5,6 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordova', 'jett.ionic.filter.bar'])
+.config(function( $ionicConfigProvider) {
+       $ionicConfigProvider.navBar.alignTitle('center');
+})
 
 .run(function ($ionicPlatform) {
   $ionicPlatform.ready(function () {
@@ -48,7 +51,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
           templateUrl: 'views/listing_catalog.html',
           controller: 'ListingCtrl'
         }
-      }
+      },
+      params: { searchTerm: null }
     })
 
     .state('app.product', {
