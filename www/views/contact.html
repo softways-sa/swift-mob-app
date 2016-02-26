@@ -1,0 +1,44 @@
+<ion-view cache-view="false">
+  <ion-nav-title class="ion-nav-title">
+    Επικοινωνία
+  </ion-nav-title>  
+  <ion-nav-buttons side="right">
+    <a class="ion-home-color" ng-href="#/app/home">
+      <i class="ion-home"></i>
+    </a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="list card product_card" >
+      <div class="item-name">
+        <h2>{{ContactDetails.title}}</h2>
+      </div>
+      <div class="item item-body">
+        <div class="item-description" ng-bind-html="description"></div>
+        <div class="row">
+          <div class="col col-20">
+            <i class="ion-ios-telephone"></i>
+          </div>
+          <div class="col col-80">
+            {{ContactDetails.phone}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-20">
+            <i class="ion-email"></i>
+          </div>
+          <div class="col col-80">
+            {{ContactDetails.email}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-20">
+            <i class="ion-ios-home"></i>
+          </div>
+          <div class="col col-80">
+            {{ContactDetails.address}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

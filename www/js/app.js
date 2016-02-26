@@ -75,7 +75,29 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
           controller: 'FavoritesCtrl'
         }
       }
-    });
+    })
+    
+    .state('app.contact', {
+        url: '/contact',
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: 'views/contact.html',
+            controller: 'ContactCtrl'
+          }
+        }
+      })
+    
+    .state('app.map', {
+        url: '/map',
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: 'views/map.html',
+            controller: 'MapCtrl'
+          }
+        }
+      });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');
 });

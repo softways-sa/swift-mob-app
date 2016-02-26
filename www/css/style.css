@@ -14,6 +14,12 @@
   font-size:40px; }
 .ion-home {
   font-size:40px; }
+.ion-ios-telephone {
+  font-size:40px; }
+.ion-email {
+  font-size:40px; }
+.ion-ios-home {
+  font-size:40px; }
 .ion-home-color{
   color: #323232; }
 .listing-title {
@@ -81,4 +87,12 @@
 }
 .ion-nav-title{
    text-align: center;
+}
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.scroll {
+  height: 100%;
 }

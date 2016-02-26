@@ -76,6 +76,7 @@ angular.module('starter.controllers', [])
 
 .factory('ListingPage', function ($http) {
   var BASE_URL = "http://qualito.softways.gr/api/v1/products.do?action1=SEARCH&catId=";
+  var SEARCH_BASE_URL = "http://qualito.softways.gr/api/v1/products.do?action1=SEARCH&catId=";
 	var items = [];
   
   return{
@@ -87,6 +88,12 @@ angular.module('starter.controllers', [])
     },
     getProducts: function(categoryId, from){
       return $http.get(BASE_URL + categoryId + '&start=' + from).then(function(response){
+        items = response.data.products;
+        return items;
+      });
+    },
+    getSearchProducts: function(searchTerm, from){
+      return $http.get(SEARCH_BASE_URL + searchTerm + '&start=' + from).then(function(response){
         items = response.data.products;
         return items;
       });
@@ -111,19 +118,35 @@ angular.module('starter.controllers', [])
   $scope.items = [];
   $scope.mikos = [];
   $scope.newItems = [];
+  $scope.newItems = [];
   var from = 0;
-
-  $scope.loadMore = function(){
-    ListingPage.getProducts($scope.categoryId,from).then(function(items) {
-      $scope.size = items;
-      $scope.items = $scope.items.concat(items);
-      from = from + 24;
-      if ( $scope.size.length < 24 ) {
-      $scope.noMoreItemsAvailable = true;
-      }
-      $scope.$broadcast('scroll.infiniteScrollComplete');
-      });
-  };
+  
+  if ($scope.searchTerm == null){
+    $scope.loadMore = function(){ 
+        ListingPage.getProducts($scope.categoryId,from).then(function(items) {
+        $scope.size = items;
+        $scope.items = $scope.items.concat(items);
+        from = from + 24;
+        if ( $scope.size.length < 24 ) {
+        $scope.noMoreItemsAvailable = true;
+        }
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+        });
+    };
+  }
+  if ($scope.searchTerm != null){
+    $scope.loadMore = function(){ 
+        ListingPage.getSearchProducts($scope.searchTerm,from).then(function(items) {
+        $scope.size = items;
+        $scope.items = $scope.items.concat(items);
+        from = from + 24;
+        if ( $scope.size.length < 24 ) {
+        $scope.noMoreItemsAvailable = true;
+        }
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+        });
+    };
+  }
 
      
 })
@@ -282,4 +305,21 @@ angular.module('starter.controllers', [])
 .controller('FavoritesCtrl', function ($scope, Favorites) {
   $scope.favorites = Favorites.getFavorites();
   $scope.favoritesServices = Favorites;
+})
+
+.factory('ContactDetails', function ($http) {
+  return{
+    getContactDetails: function () {
+      return $http({
+        url: 'http://qualito.softways.gr/api/v1/products.do?id=',
+        method: 'GET'
+      });
+    }
+  };
+})
+.controller('ContactCtrl', function ($scope, ContactDetails) {
+    $scope.contactDetails = ContactDetails.getContactDetails();
+})
+
+.controller('MapCtrl', function ($scope) {
 });
