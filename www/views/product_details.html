@@ -14,11 +14,9 @@
       </div>
       <div class="item item-body">
         <div style="text-align: center;">
-          <ks-swiper-container initial-slide="1" speed="2000" loop="true" show-nav-buttons="false" slides-per-view="1" space-between="5"
-            paginationClickable="true" pagination= "swiper-pagination"
-            override-parameters="{effect: 'slide'}">
-            <ks-swiper-slide class="swiper-slide" ng-repeat="s in [1, 3, 4, 5]">
-              <img class="full-image" ng-src="img/cat{{s}}.jpg">
+          <ks-swiper-container initial-slide="1" speed="2000" loop="true" show-nav-buttons="false" slides-per-view="1" space-between="5" paginationclickable="true" pagination="swiper-pagination" override-parameters="{effect: 'slide', paginationType: 'bullets'}">
+            <ks-swiper-slide class="swiper-slide" ng-repeat="s in ProductInfo.gallery">
+              <img class="full-image" ng-src="{{s}}">              
             </ks-swiper-slide>            
             <ks-swiper-pagination></ks-swiper-pagination>
           </ks-swiper-container>

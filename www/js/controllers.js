@@ -76,7 +76,7 @@ angular.module('starter.controllers', [])
 
 .factory('ListingPage', function ($http) {
   var BASE_URL = "http://qualito.softways.gr/api/v1/products.do?action1=SEARCH&catId=";
-  var SEARCH_BASE_URL = "http://qualito.softways.gr/api/v1/products.do?action1=SEARCH&catId=";
+  var SEARCH_BASE_URL = "http://qualito.softways.gr/api/v1/products.do?action1=SEARCH&qId=";
 	var items = [];
   
   return{
@@ -287,7 +287,7 @@ angular.module('starter.controllers', [])
     } catch (err) {
         alert(err);
     }
-}
+};
   
   $scope.favoritesService = Favorites;
   
