@@ -18,7 +18,7 @@
                 <div class="item-info">
                   <div class="item-name" style="text-align: center;">{{favorite.name}}</div>
                     <div>
-                      <button class="button button-block button-light heart" ng-class="{heart: isFavorite===true,heart2: isFavorite===false}" ng-click="favoritesServices.deleteFavorites({{favorite.id}});"><i class="ion-android-favorite-outline"></i></button>
+                      <button class="button button-block button-light heart" ng-class="heart" ng-click="favoritesServices.deleteFavorites(favorite.id);"><i class="ion-android-favorite-outline"></i></button>
                     </div>
                 </div>
               </div>

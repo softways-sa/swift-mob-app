@@ -40,15 +40,19 @@ angular.module('starter.controllers', [])
   //}, 1000);
   //};
   
-  $scope.favorites = Favorites.getFavorites();
-  $scope.total = $scope.favorites.length;
+  $scope.total = Favorites.getTotalFavorites();
   if ($scope.total > 0) {
     $scope.show = true;
   }
-  $state.go($state.current, {}, { reload: true });
+  
+  $scope.$watch(function () { return Favorites.getTotalFavorites(); }, 
+  function (newVal, oldVal) {
+    if (newVal !== oldVal) {
+      $scope.total = Favorites.getTotalFavorites();
+    }
+  });
+  
 })
-
-
 
 .factory('CategoryListing', function ($http) {
   return{
@@ -107,7 +111,6 @@ angular.module('starter.controllers', [])
   $scope.categoryId = $stateParams.categoryId;
   $scope.ListingCatalog = [];
   $scope.pathName = [];
-  //console.log($scope.searchTerm.length);
   if ($scope.searchTerm == null){
     ListingPage.getSubCategories($scope.categoryId).success(function (data) {
       $scope.ListingCatalog = data.categories;
@@ -123,28 +126,28 @@ angular.module('starter.controllers', [])
   
   if ($scope.searchTerm == null){
     $scope.loadMore = function(){ 
-        ListingPage.getProducts($scope.categoryId,from).then(function(items) {
-        $scope.size = items;
-        $scope.items = $scope.items.concat(items);
-        from = from + 24;
-        if ( $scope.size.length < 24 ) {
+      ListingPage.getProducts($scope.categoryId,from).then(function(items) {
+      $scope.size = items;
+      $scope.items = $scope.items.concat(items);
+      from = from + 24;
+      if ( $scope.size.length < 24 ) {
         $scope.noMoreItemsAvailable = true;
-        }
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-        });
+      }
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+      });
     };
   }
   if ($scope.searchTerm != null){
     $scope.loadMore = function(){ 
-        ListingPage.getSearchProducts($scope.searchTerm,from).then(function(items) {
-        $scope.size = items;
-        $scope.items = $scope.items.concat(items);
-        from = from + 24;
-        if ( $scope.size.length < 24 ) {
+      ListingPage.getSearchProducts($scope.searchTerm,from).then(function(items) {
+      $scope.size = items;
+      $scope.items = $scope.items.concat(items);
+      from = from + 24;
+      if ( $scope.size.length < 24 ) {
         $scope.noMoreItemsAvailable = true;
-        }
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-        });
+      }
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+      });
     };
   }
 
@@ -256,6 +259,10 @@ angular.module('starter.controllers', [])
       getFavorites: function () {  
         return $localstorage.getObject('favorites');
       },
+      getTotalFavorites: function () {
+        var total = this.getFavorites().length;
+        return total;
+      },
       getFavoriteId: function (favoriteId) {   
         var productId = favoriteId;   
         var isFavorite = false;
@@ -282,16 +289,18 @@ angular.module('starter.controllers', [])
   
   $scope.openURL = function() {
     try {
-        var URL = $scope.shareUrl;
-        window.open(URL, '_system', 'location=yes');
-    } catch (err) {
-        alert(err);
+      var URL = $scope.shareUrl;
+      window.open(URL, '_system', 'location=yes');
+    } 
+    catch (err) {
+      alert(err);
     }
 };
   
   $scope.favoritesService = Favorites;
   
-  $scope.$watch(function () { return Favorites.getFavoriteId($stateParams.productId); }, function (newVal, oldVal) {
+  $scope.$watch(function () { return Favorites.getFavoriteId($stateParams.productId); }, 
+  function (newVal, oldVal) {
     if (typeof newVal !== 'undefined') {
       $scope.isFavorite = Favorites.getFavoriteId($stateParams.productId);
     }
@@ -304,7 +313,15 @@ angular.module('starter.controllers', [])
 
 .controller('FavoritesCtrl', function ($scope, Favorites) {
   $scope.favorites = Favorites.getFavorites();
+  $scope.favoritesCount = Favorites.getFavorites().length;
   $scope.favoritesServices = Favorites;
+  
+  $scope.$watch(function () { return Favorites.getFavorites().length; }, 
+  function (newVal, oldVal) {
+  if (newVal !== oldVal) {
+    $scope.favorites = Favorites.getFavorites();
+  }
+  });
 })
 
 .factory('ContactDetails', function ($http) {
@@ -318,8 +335,46 @@ angular.module('starter.controllers', [])
   };
 })
 .controller('ContactCtrl', function ($scope, ContactDetails) {
-    $scope.contactDetails = ContactDetails.getContactDetails();
+  $scope.contactDetails = ContactDetails.getContactDetails();
 })
 
-.controller('MapCtrl', function ($scope) {
+.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation) {
+  var options = {timeout: 10000, enableHighAccuracy: true};
+ 
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+ 
+    //var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var latLng = new google.maps.LatLng(40.574677,22.970586);
+
+ 
+    var mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+ 
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    
+    //Wait until the map is loaded
+    google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+
+      var marker = new google.maps.Marker({
+        map: $scope.map,
+        animation: google.maps.Animation.DROP,
+        position: latLng
+      });      
+
+      var infoWindow = new google.maps.InfoWindow({
+        content: "<strong>ΕΜΠΟΡΙΟ ΒΡΕΦΙΚΩΝ - ΠΑΙΔΙΚΩΝ ΕΙΔΩΝ</strong><br/> Εθνικής Αντιστάσεως 114 <br/>Καλαμαριά Θεσσαλονίκης <br/>Τ.Κ. 55134  <br/> Τηλ. 2315-507949 <br/>sales@qualito.gr"
+      });
+
+      google.maps.event.addListener(marker, 'click', function () {
+        infoWindow.open($scope.map, marker);
+      });
+
+    }); 
+
+  }, function(error){
+    console.log("Could not get location");
+  });
 });
