@@ -5,7 +5,7 @@
   </ion-nav-buttons>
   <ion-content>    
     <div class="listing-title" ng-show="!searchTerm"><h1>{{pathName}}</h1></div>
-    <div ng-show="searchTerm"><h2>Search Term: {{searchTerm}}</h2></div>
+    <div ng-show="searchTerm"><h2>Ψάχνω για:: {{searchTerm}}</h2></div>
     <div class="list" ng-show="!searchTerm">
       <a ng-repeat="category in ListingCatalog" class="item item-thumbnail-left item-icon-right" href="#/app/listing/{{category.id}}">
         <img ng-src="{{category.image}}" alt="">
@@ -14,10 +14,10 @@
         <i class="icon ion-chevron-right icon-accessory"></i>
       </a>
     </div>
-    <div class="top-items"><h2>All Items</h2></div>
+    <div class="top-items"><h2>Προΐόντα</h2></div>
 
     <ion-list>
-      <ion-item ng-repeat="itemRows in items" style="background-color: #f5f5f5;" ng-if="$even">
+      <ion-item ng-repeat="itemRows in items" class="item-listing" ng-if="$even">
         <div class="row" ng-if="$even">
           <div class="col col-50" ng-repeat="item in [items[$index],items[$index + 1]]">
             <div class="list card" ng-show="item.name">

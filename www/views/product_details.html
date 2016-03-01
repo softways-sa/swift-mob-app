@@ -7,9 +7,6 @@
   </ion-nav-buttons>
   <ion-content>
     <div class="list card product_card" >
-      <div class="item-name">
-        <h2>{{ProductInfo.name}}</h2>
-      </div>
       <div class="item item-body">
         <div style="text-align: center;">
           <ks-swiper-container initial-slide="1" speed="2000" loop="true" show-nav-buttons="false" slides-per-view="1" space-between="5" paginationclickable="true" pagination="swiper-pagination" override-parameters="{effect: 'slide', paginationType: 'bullets'}">
@@ -18,6 +15,9 @@
             </ks-swiper-slide>            
             <ks-swiper-pagination></ks-swiper-pagination>
           </ks-swiper-container>
+        </div>
+        <div class="item-name-details">
+          <h2>{{ProductInfo.name}}</h2>
         </div>
         <div class="item-description" ng-bind-html="description"></div>
         <div class="row">
@@ -28,18 +28,20 @@
             <button class="button button-block button-light heart" ng-class="{heart: isFavorite===true,heart2: isFavorite===false}" ng-click="favoritesService.searchFavorites(ProductInfo.id,ProductInfo.name,ProductInfo.thumb,ProductInfo.description,ProductInfo.price);"><i class="ion-android-favorite-outline"></i></button>
           </div>
           <div class="col col-30 product-bottom">
-            <h2 ng-if="ProductInfo.price"><span class="item-price"> €{{ProductInfo.price}} EUR</span></h2>
+            <h2 ng-if="ProductInfo.price"><span class="item-price item-price-details"> €{{ProductInfo.price}} EUR</span></h2>
             <h2 ng-if="!ProductInfo.price"><span class="item-price">&nbsp;</span></h2>
           </div>
         </div>
-        <p>
-          <!-- Plugin for system browser source: https://blog.nraboy.com/2014/07/launch-external-urls-ionicframework/ -->   
-          <a class="item" href="#" ng-click="openURL()">            
-            <button class="button button-block button-stable">
-              For more visit our web site
-            </button>
-          </a>
-        </p>
+        <div class="row">
+          <div class="col col-100">
+            <!-- Plugin for system browser source: https://blog.nraboy.com/2014/07/launch-external-urls-ionicframework/ -->   
+            <a class="item" href="#" ng-click="openURL()">            
+              <button class="button button-block button-stable button-visit">
+                For more visit our web site
+              </button>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </ion-content>
