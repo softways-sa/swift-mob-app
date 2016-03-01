@@ -9,6 +9,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
        $ionicConfigProvider.navBar.alignTitle('center');
 })
 
+.constant('appConfig', {
+  appName: 'QUALITO',
+  apiUrl: 'http://www.sw.qualito.gr/api/v1'
+})
+
 .run(function ($ionicPlatform) {
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
