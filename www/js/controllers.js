@@ -336,17 +336,19 @@ angular.module('starter.controllers', [])
 })
 
 .factory('ContactDetails', function ($http, appConfig) {
-  return{
+  return {
     getContactDetails: function () {
       return $http({
-        url: appConfig.apiUrl + '/products.do?id=',
+        url: appConfig.apiUrl + '/contact-info.do',
         method: 'GET'
       });
     }
   };
 })
 .controller('ContactCtrl', function ($scope, ContactDetails) {
-  $scope.contactDetails = ContactDetails.getContactDetails();
+  ContactDetails.getContactDetails().success(function(data) {
+    $scope.contactInfo = data.contactInfo;
+  });
 })
 
 .controller('MapCtrl', function ($scope, $state, $cordovaGeolocation) {

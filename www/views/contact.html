@@ -1,16 +1,11 @@
 <ion-view cache-view="false">
   <ion-nav-title class="ion-nav-title">
     Επικοινωνία
-  </ion-nav-title>  
-  <ion-nav-buttons side="right">
-    <a class="ion-home-color" ng-href="#/app/home">
-      <i class="ion-home"></i>
-    </a>
-  </ion-nav-buttons>
+  </ion-nav-title>
   <ion-content>
     <div class="list card product_card" >
       <div class="item-name">
-        <h2>{{ContactDetails.title}}ΕΜΠΟΡΙΟ ΒΡΕΦΙΚΩΝ - ΠΑΙΔΙΚΩΝ ΕΙΔΩΝ</h2>
+        <h2>{{contactInfo.title}}</h2>
       </div>
       <div class="item item-body">
         <div class="item-description" ng-bind-html="description"></div>
@@ -19,7 +14,7 @@
             <i class="ion-ios-telephone"></i>
           </div>
           <div class="col col-80">
-            {{ContactDetails.phone}}2315-507949
+            {{contactInfo.phone}}
           </div>
         </div>
         <div class="row">
@@ -27,7 +22,7 @@
             <i class="ion-email"></i>
           </div>
           <div class="col col-80">
-            {{ContactDetails.email}}Sales@qualito.gr
+            {{contactInfo.email}}
           </div>
         </div>
         <div class="row">
@@ -35,9 +30,7 @@
             <i class="ion-ios-home"></i>
           </div>
           <div class="col col-80">
-            {{ContactDetails.address}}Εθνικής Αντιστάσεως 114<br/>
-Καλαμαριά Θεσσαλονίκης<br/>
-Τ.Κ. 55134<br/>
+            {{contactInfo.address1}}<br/>{{contactInfo.address2}}<br/>Τ.Κ. {{contactInfo.postalCode}}<br/>
           </div>
         </div>
       </div>
