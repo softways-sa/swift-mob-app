@@ -11,17 +11,31 @@
   color:#DBDBDB !important;
 }
 .ion-android-favorite-outline:before {
-  font-size:40px; }
+  font-size:32px;
+}
 .ion-home {
-  font-size:40px; }
+  font-size:32px; 
+  color: #606060; 
+}
 .ion-ios-telephone {
-  font-size:40px; }
+  font-size:32px; 
+  color: #606060; 
+}
 .ion-email {
-  font-size:40px; }
+  font-size:32px; 
+  color: #606060; 
+}
 .ion-ios-home {
-  font-size:40px; }
+  font-size:32px; 
+  color: #606060; 
+}
 .ion-home-color{
-  color: #323232; }
+  color: #606060; 
+}
+.ion-navicon:before {
+  font-size:32px; 
+  color: #606060; 
+}
 .listing-title {
   padding: 15px;
 }
@@ -32,7 +46,21 @@
   text-align: center;
 }
 .top-items h2{
-  color:#323232 !important;
+  color: #a7a7a7;
+  font-size: 20px;
+}
+.item-listing {
+  border-color: #ddd;
+  background-color: #f5f5f5;
+  color: #444;
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin: -1px;
+  padding: 0px;
+  border-width: 0px;
+  border-style: none;
+  font-size: 16px; 
 }
 .item-name {
   padding: 8px 8px 3px 8px;
@@ -41,6 +69,12 @@
   text-overflow: ellipsis;
   height: 50px;
   max-height: 50px;
+}
+.item-name-details {
+  padding: 8px 8px 3px 8px;
+}
+.item-name-details h2{
+  color: #323232;
 }
 .item-name h2{
   color: #323232;
@@ -62,6 +96,9 @@
   padding-top: 0px !important;
   padding: 0px 8px 3px 8px;
   text-align: left;
+}
+.item-price-details {
+    font-weight: bold;
 }
 .item-price-favorites {
   color: #323232;
@@ -95,4 +132,39 @@
 
 .scroll {
   height: 100%;
+}
+.list:last-child.card {
+    margin-bottom: 20px;
+}
+.button.button-stable {
+  border-color: transparent;
+  background-color: #e0e0e0;
+  color: #444; 
+}
+.button-visit {
+  width: 100%;
+}
+.bar .title {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+    overflow: hidden;
+    margin: 0 10px;
+    min-width: 30px;
+    height: 43px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 44px; 
+}
+.button-search {
+  background-color: #eeeeee;
+}
+.input-search {
+  background-color: #f8f8f8;
 }
