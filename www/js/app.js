@@ -11,7 +11,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
 
 .constant('appConfig', {
   appName: 'QUALITO',
-  apiUrl: 'http://www.sw.qualito.gr/api/v1'
+  apiUrl: 'http://qualito.softways.gr/api/v1'
 })
 
 .run(function ($ionicPlatform) {

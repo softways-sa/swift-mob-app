@@ -335,7 +335,7 @@ angular.module('starter.controllers', [])
   });
 })
 
-.factory('ContactDetails', function ($http, appConfig) {
+.factory('ContactInfo', function ($http, appConfig) {
   return {
     getContactDetails: function () {
       return $http({
@@ -345,20 +345,24 @@ angular.module('starter.controllers', [])
     }
   };
 })
-.controller('ContactCtrl', function ($scope, ContactDetails) {
-  ContactDetails.getContactDetails().success(function(data) {
+.controller('ContactCtrl', function ($scope, ContactInfo) {
+  ContactInfo.getContactDetails().success(function(data) {
     $scope.contactInfo = data.contactInfo;
   });
 })
 
-.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation) {
+.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, ContactInfo) {
   var options = {timeout: 10000, enableHighAccuracy: true};
+  
+  var contactInfo;
+  
+  ContactInfo.getContactDetails().success(function(data) {
+    contactInfo = data.contactInfo;
+  });
+  
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
  
-  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
- 
-    //var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    var latLng = new google.maps.LatLng(40.574677,22.970586);
-
+    var latLng = new google.maps.LatLng(contactInfo.lat,contactInfo.lng);
  
     var mapOptions = {
       center: latLng,
@@ -378,7 +382,11 @@ angular.module('starter.controllers', [])
       });      
 
       var infoWindow = new google.maps.InfoWindow({
-        content: "<strong>ΕΜΠΟΡΙΟ ΒΡΕΦΙΚΩΝ - ΠΑΙΔΙΚΩΝ ΕΙΔΩΝ</strong><br/> Εθνικής Αντιστάσεως 114 <br/>Καλαμαριά Θεσσαλονίκης <br/>Τ.Κ. 55134  <br/> Τηλ. 2315-507949 <br/>sales@qualito.gr"
+        content: "<strong>" + contactInfo.title + "</strong><br/>" 
+               + contactInfo.address1 + "<br/>" + contactInfo.address2
+               + "<br/>Τ.Κ. " + contactInfo.postalCode
+               + "<br/>Τηλ. " + contactInfo.phone
+               + "<br/>" + contactInfo.email
       });
 
       google.maps.event.addListener(marker, 'click', function () {
