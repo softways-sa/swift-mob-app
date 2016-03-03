@@ -1,11 +1,7 @@
 <ion-view cache-view="false">
-  <ion-nav-title>
-    COSMOSCENTER <!--Company's Name-->
-  </ion-nav-title>  
+  <ion-nav-title>{{appConfig.appName}}</ion-nav-title>
   <ion-content>
-    <div class="list">
-      <h2>Αγαπημένα</h2>
-    </div>    
+    <div class="top-items"><h2>Αγαπημένα</h2></div>    
     <ion-list>
       <ion-item ng-repeat="favorite in favorites" style="background-color: #f5f5f5;">
         <div class="row" ng-if="$even">
@@ -15,8 +11,8 @@
                 <a href="#/app/product/{{favorite.id}}" style="text-decoration: none;">
                   <div class="item-image"><img class="" ng-src="{{favorite.image}}" alt=""></div>
                 </a>
-                <div class="item-info">
-                  <div class="item-name" style="text-align: center;">{{favorite.name}}</div>
+                <div class="item-info button-visit">
+                  <div class="item-name">{{favorite.name}}</div>
                     <div>
                       <button class="button button-block button-light heart" ng-class="heart" ng-click="favoritesServices.deleteFavorites(favorite.id);"><i class="ion-android-favorite-outline"></i></button>
                     </div>
@@ -28,7 +24,7 @@
       </ion-item>
     </ion-list>
     <div class="row">
-      <div class="col col-100">
+      <div class="col col-100 button-visit" style="text-align: center;" >
         <button class="button button-block button-assertive" ng-click="favoritesServices.clearFavorites()">
           Διαγραφή όλων
         </button>

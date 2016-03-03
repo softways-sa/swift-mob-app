@@ -298,6 +298,16 @@ angular.module('starter.controllers', [])
     $scope.shareUrl = data.product.url;
   });  
   
+  $scope.galleryOptions = {
+      pagination: '.swiper-pagination',
+      slidesPerView: 1,
+      freeMode: false,
+      nextButton: '.swiper-button-next',
+      prevButton: '.swiper-button-prev',
+      paginationClickable: true,
+      spaceBetween: 10
+    };
+  
   $scope.openURL = function() {
     try {
       var URL = $scope.shareUrl;

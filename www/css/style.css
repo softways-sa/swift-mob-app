@@ -41,6 +41,7 @@
 }
 .listing-title h1{
   color:#323232 !important;
+  font-size: 20px;
 }
 .top-items {
   text-align: center;
@@ -75,6 +76,8 @@
 }
 .item-name-details h2{
   color: #323232;
+  font-weight: bold;
+  font-size: 20px;
 }
 .item-name h2{
   color: #323232;
@@ -142,7 +145,14 @@
   color: #444; 
 }
 .button-visit {
-  width: 100%;
+  text-align: center !important;
+}
+button.button-block,
+button.button-full,
+.button-full > button.button,
+input.button.button-block {
+  width:fit-content;
+  display:inline;
 }
 .bar .title {
     display: block;
@@ -167,4 +177,24 @@
 }
 .input-search {
   background-color: #f8f8f8;
+}
+.swiper-container {
+}
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
 }

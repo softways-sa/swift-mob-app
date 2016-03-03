@@ -9,13 +9,12 @@
     <div class="list card product_card" >
       <div class="item item-body">
         <div style="text-align: center;">
-          <ks-swiper-container initial-slide="1" speed="2000" loop="true" show-nav-buttons="false" slides-per-view="1" space-between="5" paginationclickable="true" pagination="swiper-pagination" override-parameters="{effect: 'slide', paginationType: 'bullets'}">
-            <ks-swiper-slide class="swiper-slide" ng-repeat="s in ProductInfo.gallery">
-              <img class="full-image" ng-src="{{s}}">              
-            </ks-swiper-slide>            
-            <ks-swiper-pagination></ks-swiper-pagination>
-          </ks-swiper-container>
-        </div>
+          <ion-slides options="galleryOptions" slider="gallerySlider">
+            <ion-slide-page ng-repeat="slide in ProductInfo.gallery">
+              <img ng-src="{{slide}}">
+            </ion-slide-page>
+          </ion-slides>
+        </div>        
         <div class="item-name-details">
           <h2>{{ProductInfo.name}}</h2>
         </div>
@@ -33,10 +32,10 @@
           </div>
         </div>
         <div class="row">
-          <div class="col col-100">
+          <div class="col col-100 button-visit">
             <!-- Plugin for system browser source: https://blog.nraboy.com/2014/07/launch-external-urls-ionicframework/ -->   
             <a class="item" href="#" ng-click="openURL()">            
-              <button class="button button-block button-stable button-visit">
+              <button class="button button-block button-stable">
                 For more visit our web site
               </button>
             </a>
@@ -47,4 +46,4 @@
   </ion-content>
 </ion-view>
 
-<!-- slider code from http://www.gajotres.net/how-to-create-elegant-slider-carousel-in-ionic-framework/ -->
+<!-- slider code from http://ask4kapil.xyz/2016/01/19/ionic-with-swiper/ -->
