@@ -299,14 +299,14 @@ angular.module('starter.controllers', [])
   });  
   
   $scope.galleryOptions = {
-      pagination: '.swiper-pagination',
-      slidesPerView: 1,
-      freeMode: false,
-      nextButton: '.swiper-button-next',
-      prevButton: '.swiper-button-prev',
-      paginationClickable: true,
-      spaceBetween: 10
-    };
+    pagination: '.swiper-pagination',
+    slidesPerView: 1,
+    freeMode: false,
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+    paginationClickable: true,
+    spaceBetween: 10
+  };
   
   $scope.openURL = function() {
     try {

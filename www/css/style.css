@@ -101,7 +101,7 @@
   text-align: left;
 }
 .item-price-details {
-    font-weight: bold;
+  font-weight: bold;
 }
 .item-price-favorites {
   color: #323232;
@@ -126,7 +126,7 @@
   color: #323232;
 }
 .ion-nav-title{
-   text-align: center;
+  text-align: center;
 }
 #map {
   width: 100%;
@@ -137,7 +137,7 @@
   height: 100%;
 }
 .list:last-child.card {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 .button.button-stable {
   border-color: transparent;
@@ -155,22 +155,22 @@ input.button.button-block {
   display:inline;
 }
 .bar .title {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 0;
-    overflow: hidden;
-    margin: 0 10px;
-    min-width: 30px;
-    height: 43px;
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 44px; 
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  overflow: hidden;
+  margin: 0 10px;
+  min-width: 30px;
+  height: 43px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 44px; 
 }
 .button-search {
   background-color: #eeeeee;
