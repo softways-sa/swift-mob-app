@@ -21,6 +21,7 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-x-socialsharing",
     "cordova-plugin-geolocation",
+    "cordova-plugin-inappbrowser",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
     "phonegap-plugin-push"
