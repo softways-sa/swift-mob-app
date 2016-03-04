@@ -17,21 +17,21 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close href="#/app/home">
-          <img style="vertical-align:middle" ng-src="img/menu1.png">
+        <ion-item menu-close class="menu-item" href="#/app/home">
+          <i class="ion-ios-list"></i>
           Κατάλογος
         </ion-item>
-        <ion-item menu-close item-thumbnail-left href="#/app/favorites">
-          <img style="vertical-align:middle" ng-src="img/menu2.png">
+        <ion-item menu-close class="menu-item" item-thumbnail-left href="#/app/favorites">
+          <i class="ion-android-star"></i>
           Αγαπημένα
           <span class="badge badge-stable"><div ng-if="show">{{total}}</div></span>
         </ion-item>
-        <ion-item menu-close href="#/app/map">
-          <img style="vertical-align:middle" ng-src="img/menu3.png">
+        <ion-item menu-close class="menu-item" href="#/app/map">
+          <i class="ion-ios-location"></i>
           Τοποθεσία
         </ion-item>
-        <ion-item menu-close href="#/app/contact">
-          <img style="vertical-align:middle" ng-src="img/menu4.png">
+        <ion-item menu-close class="menu-item" href="#/app/contact">
+          <i class="ion-android-phone-portrait"></i>
           Επικοινωνία
         </ion-item>
       </ion-list>

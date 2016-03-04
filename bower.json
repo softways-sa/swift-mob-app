@@ -4,7 +4,6 @@
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.4",
     "angular-swiper": "#0.3.2",
-    "ionic-filter-bar": "#1.1.1",
     "ionic-platform-web-client": "~0.5.0"
   }
 }
