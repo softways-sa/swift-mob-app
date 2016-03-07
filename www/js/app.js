@@ -10,13 +10,13 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
 })
 
 .constant('appConfig', {
-  appName: 'QUALITO',
-  apiUrl: 'http://qualito.softways.gr/api/v1'
+  appName: 'ESHOP-SPOT',
+  apiUrl: 'http://www.sw.eshop-spot.com/api/v1'
 })
 
 .run(function ($ionicPlatform) {
   
-  $ionicPlatform.ready(function () {
+  $ionicPlatform.ready(function () {    
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -28,13 +28,6 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-    var push = new Ionic.Push({
-      "debug": true
-    });
-
-    push.register(function(token) {
-      console.log("Device token:",token.token);
-    });
   });
 })
 

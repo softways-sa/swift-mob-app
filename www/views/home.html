@@ -4,15 +4,15 @@
     <form ng-submit="goToTab(searchTerm)">
       <div class="item item-input-inset">
         <label class="item-input-wrapper input-search">
-          <i class="icon ion-search placeholder-icon"></i>
-          <input type="text" placeholder="Ψάχνω για..." ng-model="searchTerm">
+          <i class="ion-search"></i>
+          <input type="text" class="search_form_title" placeholder="Ψάχνω για..." ng-model="searchTerm">
         </label>
         <button type="submit" class="button button-small button-search">
           Αναζήτηση
         </button>
       </div>
     </form>
-    <div><img ng-src="img/home_bg.jpg" style="height: 30vw; width: 100vw;" alt=""></div>
+    <div class="home_image"><img ng-src="img/home_bg.jpg" alt="" style="width:100%;"></div>
     <div class="list">
       <a ng-repeat="category in _list" class="item item-thumbnail-left  item-icon-right" href="#/app/listing/{{category.id}}">
         <img ng-src="{{category.image}}" alt="">
