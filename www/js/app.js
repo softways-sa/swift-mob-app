@@ -11,7 +11,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
 
 .constant('appConfig', {
   appName: 'INOXDOBROS',
-  apiUrl: 'http://www2.sw.inoxdobros.gr/api/v1'
+  apiUrl: 'http://inoxdobros.softways.gr/api/v1'
 })
 
 .run(function ($ionicPlatform) {
