@@ -45,12 +45,16 @@ angular.module('starter.controllers', [])
     $scope.show = true;
   }
   
-  $scope.$watch(function () { return Favorites.getTotalFavorites(); }, 
-  function (newVal, oldVal) {
-    if (newVal !== oldVal) {
-      $scope.total = Favorites.getTotalFavorites();
+  $scope.$watch(function () { return Favorites.getTotalFavorites(); },
+    function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        $scope.total = newVal;
+        if ($scope.total > 0) {
+          $scope.show = true;
+        }
+      }
     }
-  });
+  );
   
 })
 
