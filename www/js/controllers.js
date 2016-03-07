@@ -121,6 +121,7 @@ angular.module('starter.controllers', [])
 .controller('HomeCtrl', function ($scope, CategoryListing, ConnectivityMonitor, $state, appConfig) {
   ConnectivityMonitor.startWatching();
   $scope.appConfig = appConfig;
+  $scope.loading = true;
   
   $scope.goToTab = function(searchTerm) {
     $state.go('app.listing', {
@@ -131,6 +132,10 @@ angular.module('starter.controllers', [])
   $scope._list = [];
   CategoryListing.getCategories().success(function (data) {
     $scope._list = data.categories;
+  })
+  .finally(function () {
+    // Hide loading spinner whether our call succeeded or failed.
+    $scope.loading = false;
   });
 })
 
@@ -185,7 +190,10 @@ angular.module('starter.controllers', [])
   function loadData(items) {
     var itemsSize = items.length;
     
-    $scope.items = $scope.items.concat(items);
+    angular.forEach(items, function(value) {
+      this.push(value);
+    }, $scope.items);
+    
     from = from + 24;
     if (itemsSize < 24) {
       $scope.noMoreItemsAvailable = true;
@@ -344,13 +352,21 @@ angular.module('starter.controllers', [])
     });
   };
 
-  ProductDetails.getProductDetails($stateParams.productId).success(function (data) {
-    $scope.ProductInfo = data.product;
-    $scope.pathName = data.product.name;
-    $scope.description = data.product.description;
-    $scope.shareImage = data.product.thumb;
-    $scope.shareUrl = data.product.url;
-  });  
+  $scope.productLoading = true;
+
+  ProductDetails.getProductDetails($stateParams.productId)
+    .success(function (data) {
+      $scope.ProductInfo = data.product;
+      $scope.pathName = data.product.name;
+      $scope.description = data.product.description;
+      $scope.shareImage = data.product.thumb;
+      $scope.shareUrl = data.product.url;
+    })
+    .finally(function () {
+      // Hide loading spinner whether our call succeeded or failed.
+      $scope.productLoading = false;
+    }
+  );
   
   $scope.galleryOptions = {
     pagination: '.swiper-pagination',

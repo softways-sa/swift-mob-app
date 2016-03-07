@@ -6,6 +6,8 @@
     <a class="ion-home-color" ng-href="#/app/home" ng-click="goHome()"><i class="ion-ios-home-outline"></i></a>
   </ion-nav-buttons>
   <ion-content>
+    <div style="text-align: center;" ng-show="productLoading"><ion-spinner></ion-spinner></div>
+    
     <div class="list card product_card" >
       <div class="item item-body">
         <div style="text-align: center;">
@@ -14,7 +16,7 @@
               <img ng-src="{{slide}}">
             </ion-slide-page>
           </ion-slides>
-        </div>        
+        </div>
         <div class="item-name-details">
           <h2>{{ProductInfo.name}}</h2>
         </div>
