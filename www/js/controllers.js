@@ -187,6 +187,7 @@ angular.module('starter.controllers', [])
   $scope.newItems = [];
   var from = 0;
   
+  $scope.catLoading = true;
   $scope.loading = true;
   
   function loadData(items) {
@@ -204,9 +205,14 @@ angular.module('starter.controllers', [])
   }
   
   if ($scope.searchTerm == null) {
-    ListingPage.getSubCategories($scope.categoryId).success(function (data) {
+    ListingPage.getSubCategories($scope.categoryId)
+    .success(function (data) {
       $scope.ListingCatalog = data.categories;
       $scope.pathName = data.parent.name;
+    })
+    .finally(function () {
+      // Hide loading spinner whether our call succeeded or failed.
+      $scope.catLoading = false;
     });
     
     $scope.loadMore = function() {
@@ -365,7 +371,6 @@ angular.module('starter.controllers', [])
       $scope.shareUrl = data.product.url;
     })
     .finally(function () {
-      // Hide loading spinner whether our call succeeded or failed.
       $scope.productLoading = false;
     }
   );
@@ -384,7 +389,7 @@ angular.module('starter.controllers', [])
     try {
       var URL = $scope.shareUrl;
       window.open(URL, '_system', 'location=yes');
-    } 
+    }
     catch (err) {
       alert(err);
     }
@@ -392,12 +397,13 @@ angular.module('starter.controllers', [])
   
   $scope.favoritesService = Favorites;
   
-  $scope.$watch(function () { return Favorites.getFavoriteId($stateParams.productId); }, 
-  function (newVal, oldVal) {
-    if (typeof newVal !== 'undefined') {
-      $scope.isFavorite = Favorites.getFavoriteId($stateParams.productId);
+  $scope.$watch(function () { return Favorites.getFavoriteId($stateParams.productId); },
+    function (newVal, oldVal) {
+      if (typeof newVal !== 'undefined') {
+        $scope.isFavorite = Favorites.getFavoriteId($stateParams.productId);
+      }
     }
-  });
+  );
   
   $scope.shareAnywhere = function() {
     $cordovaSocialSharing.share("Swift-mob-App", "The smart application you need!", $scope.shareImage, $scope.shareUrl);
