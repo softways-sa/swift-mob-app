@@ -187,6 +187,8 @@ angular.module('starter.controllers', [])
   $scope.newItems = [];
   var from = 0;
   
+  $scope.loading = true;
+  
   function loadData(items) {
     var itemsSize = items.length;
     
@@ -208,12 +210,12 @@ angular.module('starter.controllers', [])
     });
     
     $scope.loadMore = function() {
-      ListingPage.getProducts($scope.categoryId,from).then(function(items) {loadData(items)});
+      ListingPage.getProducts($scope.categoryId,from).then(function(items) {$scope.loading = false; loadData(items)});
     }
   }
   else if ($scope.searchTerm != null) {
     $scope.loadMore = function() {
-      ListingPage.getSearchProducts($scope.searchTerm,from).then(function(items) {loadData(items)});
+      ListingPage.getSearchProducts($scope.searchTerm,from).then(function(items) {$scope.loading = false; loadData(items)});
     }
   }
   
