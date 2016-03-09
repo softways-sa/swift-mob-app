@@ -183,7 +183,6 @@ angular.module('starter.controllers', [])
   $scope.pathName = [];
   
   $scope.items = [];
-  $scope.mikos = [];
   $scope.newItems = [];
   var from = 0;
   
@@ -410,10 +409,28 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('FavoritesCtrl', function ($scope, Favorites) {
+.controller('FavoritesCtrl', function ($scope, Favorites, appConfig, $ionicPopup) {
+  $scope.appConfig = appConfig;
   $scope.favorites = Favorites.getFavorites();
   $scope.favoritesCount = Favorites.getFavorites().length;
+  $scope.favoritesButton = false;
+  if ($scope.favoritesCount > 0) {
+    $scope.favoritesButton = true;
+  }
   $scope.favoritesServices = Favorites;
+  
+  // A confirm dialog
+  $scope.showConfirm = function(id) {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Διαγραφή Αγαπημένου',
+      template: 'Είστε σίγουρος για την διαγραφή;'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        Favorites.deleteFavorites(id);
+      }
+    });
+   };
   
   $scope.$watch(function () { return Favorites.getFavorites().length; }, 
   function (newVal, oldVal) {
@@ -433,13 +450,15 @@ angular.module('starter.controllers', [])
     }
   };
 })
-.controller('ContactCtrl', function ($scope, ContactInfo) {
+.controller('ContactCtrl', function ($scope, ContactInfo, appConfig) {
+  $scope.appConfig = appConfig;
   ContactInfo.getContactDetails().success(function(data) {
     $scope.contactInfo = data.contactInfo;
   });
 })
 
-.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, ContactInfo) {
+.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, ContactInfo, appConfig) {
+  $scope.appConfig = appConfig;
   var options = {timeout: 10000, enableHighAccuracy: true};
   
   var contactInfo;

@@ -5,17 +5,18 @@
   </ion-nav-buttons>
   <ion-content>
     <div class="listing-title" ng-show="!searchTerm"><h1>{{pathName}}</h1></div>
-    <div ng-show="searchTerm"><h2>Ψάχνω για: {{searchTerm}}</h2></div>
+    <div ng-show="searchTerm" class="search-for"><h2>Ψάχνω για: {{searchTerm}}</h2></div>
     <div class="list" ng-show="!searchTerm">
       <div style="text-align: center;" ng-show="catLoading"><ion-spinner></ion-spinner></div>
       <a ng-repeat="category in ListingCatalog" class="item item-thumbnail-left item-icon-right" href="#/app/listing/{{category.id}}">
-        <img ng-src="{{category.image}}" alt="">
+        <img ng-if="category.image" ng-src="{{category.image}}" alt="">
+        <img ng-if="!category.image" ng-src="img/no-image-cat.jpg" alt="">
         <h2>{{category.name}}</h2>
-        <p>{{category.description}}</p>
+        <!--<p>{{category.description}}</p>-->
         <i class="icon ion-chevron-right icon-accessory"></i>
       </a>
     </div>
-    <div class="top-items"><h2>Προΐόντα</h2></div>
+    <div class="top-items"><h2>Προϊόντα</h2></div>
     <div style="text-align: center;" ng-show="loading"><ion-spinner></ion-spinner></div>
     <ion-list>
       <ion-item ng-repeat="itemRows in items" class="item-listing" ng-if="$even">
@@ -24,7 +25,8 @@
             <div class="list card" ng-show="item.name">
               <div class="item item-body">
                 <a href="#/app/product/{{item.id}}" style="text-decoration: none;">
-                  <div class="item-image"><img class="" ng-src="{{item.thumb}}" alt=""></div>
+                  <div class="item-image" ng-if="item.thumb"><img class="" ng-src="{{item.thumb}}" alt=""></div>
+                  <div class="item-image" ng-if="!item.thumb"><img class="" ng-src="img/no-image.jpg" alt=""></div>
                   <div class="item-info">
                     <div class="item-name">{{item.name}}</div>
                     <div class="item-price" ng-if="item.price">{{item.price}} €</div>

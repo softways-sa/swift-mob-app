@@ -16,9 +16,10 @@
     <div style="text-align: center;" ng-show="loading"><ion-spinner></ion-spinner></div>
     <div class="list">
       <a ng-repeat="category in _list" class="item item-thumbnail-left  item-icon-right" href="#/app/listing/{{category.id}}">
-        <img ng-src="{{category.image}}" alt="">
+        <img ng-if="category.image" ng-src="{{category.image}}" alt="" />
+        <img ng-if="!category.image" ng-src="img/no-image-cat.jpg" alt="" />
         <h2>{{category.name}}</h2>
-        <p>{{category.description}}</p>
+        <!--<p>{{category.description}}</p>-->
         <i class="icon ion-chevron-right icon-accessory"></i>
       </a>
     </div>

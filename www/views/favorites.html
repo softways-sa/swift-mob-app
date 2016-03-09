@@ -1,9 +1,12 @@
 <ion-view cache-view="false">
   <ion-nav-title>{{appConfig.appName}}</ion-nav-title>
+  <ion-nav-buttons side="right">
+    <a class="ion-home-color" ng-href="#/app/home" ng-click="goHome()"><i class="ion-ios-home-outline"></i></a>
+  </ion-nav-buttons>
   <ion-content>
     <div class="top-items"><h2>Αγαπημένα</h2></div>    
     <ion-list>
-      <ion-item ng-repeat="favorite in favorites" style="background-color: #f5f5f5;">
+      <ion-item ng-repeat="favorite in favorites" class="item-listing" ng-if="$even">
         <div class="row" ng-if="$even">
           <div class="col col-50" ng-repeat="favorite in [favorites[$index],favorites[$index + 1]]">
             <div class="list card" ng-show="favorite.name">
@@ -14,7 +17,7 @@
                 <div class="item-info button-visit">
                   <div class="item-name">{{favorite.name}}</div>
                     <div>
-                      <button class="button button-block button-light heart" ng-class="heart" ng-click="favoritesServices.deleteFavorites(favorite.id);"><i class="ion-ios-star"></i></button>
+                      <button class="button button-block button-light heart" ng-class="heart" ng-click="showConfirm(favorite.id);"><i class="ion-ios-star"></i></button>
                     </div>
                 </div>
               </div>
@@ -23,7 +26,7 @@
         </div>
       </ion-item>
     </ion-list>
-    <div class="row">
+    <div class="row" ng-show="favoritesButton">
       <div class="col col-100 button-visit" style="text-align: center;" >
         <button class="button button-block button-assertive" ng-click="favoritesServices.clearFavorites()">
           Διαγραφή όλων
