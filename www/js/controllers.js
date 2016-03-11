@@ -203,7 +203,7 @@ angular.module('starter.controllers', [])
     $scope.$broadcast('scroll.infiniteScrollComplete');
   }
   
-  if ($scope.searchTerm == null) {
+  if ($scope.searchTerm == null && $scope.categoryId.length != 0) {    
     ListingPage.getSubCategories($scope.categoryId)
     .success(function (data) {
       $scope.ListingCatalog = data.categories;
@@ -222,6 +222,9 @@ angular.module('starter.controllers', [])
     $scope.loadMore = function() {
       ListingPage.getSearchProducts($scope.searchTerm,from).then(function(items) {$scope.loading = false; loadData(items)});
     }
+  }
+  else {
+    return $state.go('app.home');
   }
   
   $scope.loadMore();
