@@ -5,7 +5,7 @@
   </ion-nav-buttons>
   <ion-content>
     <div class="listing-title" ng-show="!searchTerm"><h1>{{pathName}}</h1></div>
-    <div ng-show="searchTerm" class="search-for"><h2>Ψάχνω για: {{searchTerm}}</h2></div>
+    <div ng-show="searchTerm" class="search-for"><h2>Ψάχνω για: <div class="ng-cloak">{{searchTerm}}</div></h2></div>
     <div class="list" ng-show="!searchTerm">
       <div style="text-align: center;" ng-show="catLoading"><ion-spinner></ion-spinner></div>
       <a ng-repeat="category in ListingCatalog" class="item item-thumbnail-left item-icon-right" href="#/app/listing/{{category.id}}">
@@ -17,6 +17,7 @@
       </a>
     </div>
     <div class="top-items"><h2>Προϊόντα</h2></div>
+    <div ng-show="items.length == 0">Δεν βρέθηκαν αποτελέσματα</div>
     <div style="text-align: center;" ng-show="loading"><ion-spinner></ion-spinner></div>
     <ion-list>
       <ion-item ng-repeat="itemRows in items" class="item-listing" ng-if="$even">

@@ -23,8 +23,7 @@
     "cordova-plugin-geolocation",
     "cordova-plugin-inappbrowser",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard",
-    "phonegap-plugin-push"
+    "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [
     "android"

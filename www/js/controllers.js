@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function ($scope, $ionicModal, $timeout, Favorites, $state) {
+.controller('AppCtrl', function ($scope, $ionicModal, $timeout, Favorites, $state, $ionicPopup) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -118,8 +118,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('HomeCtrl', function ($scope, CategoryListing, ConnectivityMonitor, $state, appConfig) {
-  ConnectivityMonitor.startWatching();
+.controller('HomeCtrl', function ($scope, CategoryListing, ConnectivityMonitor, $state, appConfig, $ionicPopup) {
+  //ConnectivityMonitor.startWatching();
   $scope.appConfig = appConfig;
   $scope.loading = true;
   
@@ -166,7 +166,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ListingCtrl', function ($scope, $stateParams, ListingPage, appConfig, $state, $ionicHistory) {
+.controller('ListingCtrl', function ($scope, $stateParams, ListingPage, appConfig, $state, $ionicHistory, $ionicPopup) {
   $scope.goHome = function() {
     $ionicHistory.nextViewOptions({
       disableBack: true,
@@ -222,9 +222,6 @@ angular.module('starter.controllers', [])
     $scope.loadMore = function() {
       ListingPage.getSearchProducts($scope.searchTerm,from).then(function(items) {$scope.loading = false; loadData(items)});
     }
-  }
-  else {
-    return $state.go('app.home');
   }
   
   $scope.loadMore();
@@ -354,7 +351,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ProductCtrl', function ($scope, $stateParams, ProductDetails, Favorites, $cordovaSocialSharing, $ionicHistory) {
+.controller('ProductCtrl', function ($scope, $stateParams, ProductDetails, Favorites, $cordovaSocialSharing, $ionicHistory, $ionicPopup) {
   $scope.goHome = function() {
     $ionicHistory.nextViewOptions({
       disableBack: true,
@@ -389,8 +386,7 @@ angular.module('starter.controllers', [])
   
   $scope.openURL = function() {
     try {
-      var URL = $scope.shareUrl;
-      window.open(URL, '_system', 'location=yes');
+      window.open($scope.shareUrl, '_system', 'location=yes');
     }
     catch (err) {
       alert(err);
@@ -453,14 +449,14 @@ angular.module('starter.controllers', [])
     }
   };
 })
-.controller('ContactCtrl', function ($scope, ContactInfo, appConfig) {
+.controller('ContactCtrl', function ($scope, ContactInfo, appConfig, $ionicPopup) {
   $scope.appConfig = appConfig;
   ContactInfo.getContactDetails().success(function(data) {
     $scope.contactInfo = data.contactInfo;
   });
 })
 
-.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, ContactInfo, appConfig) {
+.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, ContactInfo, appConfig, $ionicPopup) {
   $scope.appConfig = appConfig;
   var options = {timeout: 10000, enableHighAccuracy: true};
   

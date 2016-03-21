@@ -4,9 +4,34 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
+function initPushwoosh(pushwoosh, appConfig) {
+  var pushNotification = cordova.require("pushwoosh-cordova-plugin.PushNotification");
+  if (device.platform == "Android") {
+    registerPushwooshAndroid(pushwoosh, appConfig);
+  }
+
+  if (device.platform == "iPhone" || device.platform == "iOS") {
+    registerPushwooshIOS();
+  }
+
+  if (device.platform == "Win32NT") {
+    registerPushwooshWP();
+  }
+
+  pushNotification.getLaunchNotification(
+    function(notification) {
+      if (notification != null) {
+        alert(JSON.stringify(notification));
+      } else {
+        //alert("No launch notification");
+      }
+    }
+  );
+}
+
 angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordova'])
 .config(function( $ionicConfigProvider) {
-       $ionicConfigProvider.navBar.alignTitle('center');
+  $ionicConfigProvider.navBar.alignTitle('center');
 })
 
 .constant('appConfig', {
@@ -14,7 +39,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
   apiUrl: 'http://inoxdobros.softways.gr/api/v1'
 })
 
-.run(function ($ionicPlatform) {
+.run(function ($ionicPlatform, $ionicPopup, appConfig) {
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -26,6 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    initPushwoosh($ionicPopup, appConfig);
   });
 })
 
