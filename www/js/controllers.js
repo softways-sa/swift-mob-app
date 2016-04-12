@@ -81,7 +81,7 @@ angular.module('starter.controllers', [])
     },
     isOffline: function(){
       if(ionic.Platform.isWebView()){
-        return !$cordovaNetwork.isOnline();    
+        return $cordovaNetwork.isOffline(); 
       } else {
         return !navigator.onLine;
       }
@@ -118,10 +118,21 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('HomeCtrl', function ($scope, CategoryListing, ConnectivityMonitor, $state, appConfig, $ionicPopup) {
-  //ConnectivityMonitor.startWatching();
+.controller('HomeCtrl', function ($scope, CategoryListing, ConnectivityMonitor, $state, appConfig, $ionicHistory) {
+
+  $scope.$on('$ionicView.enter', function(){ 
+    if(ConnectivityMonitor.isOffline() === true){
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+      $state.go("app.404");
+    }
+  });
+  
   $scope.appConfig = appConfig;
   $scope.loading = true;
+  
+  $scope.promo = appConfig.serverHost + "/images/mob-app-home-promo.jpg";
   
   $scope.goToTab = function(searchTerm) {
     $state.go('app.listing', {
@@ -166,7 +177,17 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ListingCtrl', function ($scope, $stateParams, ListingPage, appConfig, $state, $ionicHistory, $ionicPopup) {
+.controller('ListingCtrl', function ($scope, $stateParams, ListingPage, appConfig, $state, $ionicHistory, ConnectivityMonitor) {
+
+  $scope.$on('$ionicView.enter', function(){ 
+    if(ConnectivityMonitor.isOffline() === true){
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+      $state.go("app.404");
+    }
+  });
+  
   $scope.goHome = function() {
     $ionicHistory.nextViewOptions({
       disableBack: true,
@@ -180,7 +201,7 @@ angular.module('starter.controllers', [])
   $scope.searchTerm = $stateParams.searchTerm;
   $scope.categoryId = $stateParams.categoryId;
   $scope.ListingCatalog = [];
-  $scope.pathName = [];
+  $scope.pathName = "";
   
   $scope.items = [];
   $scope.newItems = [];
@@ -351,7 +372,17 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ProductCtrl', function ($scope, $stateParams, ProductDetails, Favorites, $cordovaSocialSharing, $ionicHistory, $ionicPopup) {
+.controller('ProductCtrl', function ($scope, $stateParams, $state, ProductDetails, Favorites, $cordovaSocialSharing, $ionicHistory, ConnectivityMonitor, appConfig) {
+
+  $scope.$on('$ionicView.enter', function(){ 
+    if(ConnectivityMonitor.isOffline() === true){
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+      $state.go("app.404");
+    }
+  });
+  
   $scope.goHome = function() {
     $ionicHistory.nextViewOptions({
       disableBack: true,
@@ -404,7 +435,7 @@ angular.module('starter.controllers', [])
   );
   
   $scope.shareAnywhere = function() {
-    $cordovaSocialSharing.share("Swift-mob-App", "The smart application you need!", $scope.shareImage, $scope.shareUrl);
+    $cordovaSocialSharing.share(appConfig.appName, "", $scope.shareImage, $scope.shareUrl);
   };
 })
 
@@ -449,14 +480,36 @@ angular.module('starter.controllers', [])
     }
   };
 })
-.controller('ContactCtrl', function ($scope, ContactInfo, appConfig, $ionicPopup) {
+.controller('ContactCtrl', function ($scope, ContactInfo, appConfig, ConnectivityMonitor, $state, $ionicHistory) {
+  
+  $scope.$on('$ionicView.enter', function(){ 
+    if(ConnectivityMonitor.isOffline() === true){
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+      $state.go("app.404");
+    }
+  });
+  
   $scope.appConfig = appConfig;
   ContactInfo.getContactDetails().success(function(data) {
     $scope.contactInfo = data.contactInfo;
   });
 })
+.controller('404Ctrl', function ($scope, appConfig) {
+  $scope.appConfig = appConfig;
+})
 
-.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, ContactInfo, appConfig, $ionicPopup) {
+.controller('MapCtrl', function ($scope, $ionicHistory, $state, $cordovaGeolocation, ContactInfo, appConfig, ConnectivityMonitor) {
+
+  $scope.$on('$ionicView.enter', function(){ 
+    if(ConnectivityMonitor.isOffline() === true){
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+      $state.go("app.404");
+    }
+  });
   $scope.appConfig = appConfig;
   var options = {timeout: 10000, enableHighAccuracy: true};
   

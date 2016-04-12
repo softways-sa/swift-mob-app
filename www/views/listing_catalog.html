@@ -17,7 +17,9 @@
       </a>
     </div>
     <div class="top-items"><h2>Προϊόντα</h2></div>
+    <div ng-show="!loading">
     <div ng-show="items.length == 0">Δεν βρέθηκαν αποτελέσματα</div>
+    </div>
     <div style="text-align: center;" ng-show="loading"><ion-spinner></ion-spinner></div>
     <ion-list>
       <ion-item ng-repeat="itemRows in items" class="item-listing" ng-if="$even">
@@ -27,7 +29,7 @@
               <div class="item item-body">
                 <a href="#/app/product/{{item.id}}" style="text-decoration: none;">
                   <div class="item-image" ng-if="item.thumb"><img class="" ng-src="{{item.thumb}}" alt=""></div>
-                  <div class="item-image" ng-if="!item.thumb"><img class="" ng-src="img/no-image.jpg" alt=""></div>
+                  <div class="item-image" ng-if="!item.thumb"><img class="" ng-src="img/no-image.png" alt=""></div>
                   <div class="item-info">
                     <div class="item-name">{{item.name}}</div>
                     <div class="item-price" ng-if="item.price">{{item.price}} €</div>

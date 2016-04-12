@@ -5,28 +5,18 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 function initPushwoosh(pushwoosh, appConfig) {
-  var pushNotification = cordova.require("pushwoosh-cordova-plugin.PushNotification");
   if (device.platform == "Android") {
     registerPushwooshAndroid(pushwoosh, appConfig);
   }
 
   if (device.platform == "iPhone" || device.platform == "iOS") {
-    registerPushwooshIOS();
+    registerPushwooshIOS(pushwoosh, appConfig);
   }
-
+  /**
   if (device.platform == "Win32NT") {
     registerPushwooshWP();
-  }
+  }**/
 
-  pushNotification.getLaunchNotification(
-    function(notification) {
-      if (notification != null) {
-        alert(JSON.stringify(notification));
-      } else {
-        //alert("No launch notification");
-      }
-    }
-  );
 }
 
 angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordova'])
@@ -35,16 +25,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
 })
 
 .constant('appConfig', {
-  appName: 'INOXDOBROS',
+  appName: 'InoxDobros',
+  serverHost: 'http://inoxdobros.softways.gr',
   apiUrl: 'http://inoxdobros.softways.gr/api/v1'
 })
 
-.run(function ($ionicPlatform, $ionicPopup, appConfig) {
+.run(function ($ionicPlatform, $ionicPopup, appConfig, $rootScope, $cordovaNetwork) {
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      //cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
     }
     if (window.StatusBar) {
@@ -66,6 +57,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
 
     .state('app.home', {
       url: '/home',
+      cache: false,
       views: {
         'menuContent': {
           templateUrl: 'views/home.html',
@@ -125,6 +117,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
           'menuContent': {
             templateUrl: 'views/map.html',
             controller: 'MapCtrl'
+          }
+        }
+      })
+    
+    .state('app.404', {
+        url: '/404',
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: 'views/404.html',
+            controller: '404Ctrl'
           }
         }
       });
