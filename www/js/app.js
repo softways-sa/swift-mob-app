@@ -4,13 +4,13 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-function initPushwoosh(pushwoosh, appConfig) {
+function initPushwoosh(ionicPopup, appConfig) {
   if (device.platform == "Android") {
-    registerPushwooshAndroid(pushwoosh, appConfig);
+    registerPushwooshAndroid(ionicPopup, appConfig);
   }
 
   if (device.platform == "iPhone" || device.platform == "iOS") {
-    registerPushwooshIOS(pushwoosh, appConfig);
+    registerPushwooshIOS(ionicPopup, appConfig);
   }
   /**
   if (device.platform == "Win32NT") {
@@ -25,9 +25,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
 })
 
 .constant('appConfig', {
-  appName: 'InoxDobros',
-  serverHost: 'http://inoxdobros.softways.gr',
-  apiUrl: 'http://inoxdobros.softways.gr/api/v1'
+  appName: 'Softways',
+  serverHost: 'http://www.yourdomain.gr',
+  apiUrl: 'http://www.yourdomain.gr/api/v1',
+  googleProjectId: "GOOGLE_PROJECT_ID",
+  pushwooshAppId: "PUSHWOOSH_APP_ID"
 })
 
 .run(function ($ionicPlatform, $ionicPopup, appConfig, $rootScope, $cordovaNetwork) {

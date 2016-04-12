@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="gr.softways.inoxdobros" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>InoxDobros</name>
+<widget id="gr.softways.swift_mob_app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Softways</name>
   <description>
-    An Ionic Framework and Cordova project.
+    Mobile application for swift e-commerce platform
   </description>
-  <author email="you@example.com" href="http://example.com.com/">
-    Your Name Here
+  <author email="info@softways.gr" href="http://www.softways.gr/">
+    Softways Hellas S.A.
   </author>
-  <!--<hook type="after_prepare" src="package-hooks/ios9_allow_http.sh"/>-->
   <content src="index.html"/>
   <access origin="*"/>
-  <access origin="*.pushwoosh.com"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
@@ -43,6 +41,7 @@
     <splash src="resources\android\splash\drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
   </platform>
   <platform name="ios">
+    <hook type="after_prepare" src="package-hooks/ios9_allow_http.sh"/>
     <icon src="resources\ios\icon\icon.png" width="57" height="57"/>
     <icon src="resources\ios\icon\icon@2x.png" width="114" height="114"/>
     <icon src="resources\ios\icon\icon-40.png" width="40" height="40"/>

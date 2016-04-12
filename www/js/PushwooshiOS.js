@@ -17,7 +17,7 @@
  * under the License.
  */
 
-function registerPushwooshIOS(pushwoosh, appConfig) {
+function registerPushwooshIOS(ionicPopup, appConfig) {
 	var pushNotification = cordova.require("pushwoosh-cordova-plugin.PushNotification");
 
 	//set push notification callback before we initialize the plugin
@@ -28,7 +28,7 @@ function registerPushwooshIOS(pushwoosh, appConfig) {
 
 			//display alert to the user for example
 			//alert(notification.aps.alert);
-      pushwoosh.alert({
+      ionicPopup.alert({
         title: appConfig.appName,
         template: notification.aps.alert
       });
@@ -42,7 +42,7 @@ function registerPushwooshIOS(pushwoosh, appConfig) {
 	);
 
 	//initialize the plugin
-    pushNotification.onDeviceReady({pw_appid:"1C37C-89F67"});
+    pushNotification.onDeviceReady({pw_appid:appConfig.pushwooshAppId});
 
 	//register for pushes
 	pushNotification.registerDevice(

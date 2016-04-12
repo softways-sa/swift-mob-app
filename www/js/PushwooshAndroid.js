@@ -17,7 +17,7 @@
  * under the License.
  */
 
-function registerPushwooshAndroid(pushwoosh, appConfig) {
+function registerPushwooshAndroid(ionicPopup, appConfig) {
 	var pushNotification = cordova.require("pushwoosh-cordova-plugin.PushNotification");
 
 	//set push notifications handler
@@ -33,7 +33,7 @@ function registerPushwooshAndroid(pushwoosh, appConfig) {
 
 			//and show alert
 			//alert(title);
-      pushwoosh.alert({
+      ionicPopup.alert({
         title: appConfig.appName,
         template: title
       });
@@ -44,7 +44,7 @@ function registerPushwooshAndroid(pushwoosh, appConfig) {
 	);
 
 	//initialize Pushwoosh with projectid: "GOOGLE_PROJECT_ID", appid : "PUSHWOOSH_APP_ID". This will trigger all pending push notifications on start.
-	pushNotification.onDeviceReady({ projectid: "1022429607803", appid : "1C37C-89F67" });
+	pushNotification.onDeviceReady({ projectid: appConfig.googleProjectId, appid : appConfig.pushwooshAppId });
 
 	//register for push notifications
 	pushNotification.registerDevice(

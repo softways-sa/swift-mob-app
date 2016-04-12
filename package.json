@@ -27,7 +27,5 @@
     "pushwoosh-cordova-plugin",
     "cordova-plugin-network-information"
   ],
-  "cordovaPlatforms": [
-    "android"
-  ]
+  "cordovaPlatforms": []
 }
