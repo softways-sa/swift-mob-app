@@ -81,7 +81,7 @@ angular.module('starter.controllers', [])
     },
     isOffline: function(){
       if(ionic.Platform.isWebView()){
-        return $cordovaNetwork.isOffline(); 
+        if (typeof navigator.connection == 'undefined') return false; else return $cordovaNetwork.isOffline();
       } else {
         return !navigator.onLine;
       }
