@@ -500,7 +500,7 @@ angular.module('starter.controllers', [])
   $scope.appConfig = appConfig;
 })
 
-.controller('MapCtrl', function ($scope, $ionicHistory, $state, $cordovaGeolocation, ContactInfo, appConfig, ConnectivityMonitor) {
+.controller('MapCtrl', function ($scope, $ionicHistory, $state, ContactInfo, appConfig, ConnectivityMonitor) {
 
   $scope.$on('$ionicView.enter', function(){ 
     if(ConnectivityMonitor.isOffline() === true){
@@ -511,26 +511,22 @@ angular.module('starter.controllers', [])
     }
   });
   $scope.appConfig = appConfig;
-  var options = {timeout: 10000, enableHighAccuracy: true};
   
   var contactInfo;
   
   ContactInfo.getContactDetails().success(function(data) {
     contactInfo = data.contactInfo;
-  });
-  
-  $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
- 
+    
     var latLng = new google.maps.LatLng(contactInfo.lat,contactInfo.lng);
- 
+
     var mapOptions = {
       center: latLng,
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
- 
+
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    
+
     //Wait until the map is loaded
     google.maps.event.addListenerOnce($scope.map, 'idle', function(){
 
@@ -551,10 +547,6 @@ angular.module('starter.controllers', [])
       google.maps.event.addListener(marker, 'click', function () {
         infoWindow.open($scope.map, marker);
       });
-
-    }); 
-
-  }, function(error){
-    console.log("Could not get location");
+    });
   });
 });
