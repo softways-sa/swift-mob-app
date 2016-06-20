@@ -4,6 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
+
 function initPushwoosh(ionicPopup, appConfig) {
   if (device.platform == "Android") {
     registerPushwooshAndroid(ionicPopup, appConfig);
@@ -12,11 +13,10 @@ function initPushwoosh(ionicPopup, appConfig) {
   if (device.platform == "iPhone" || device.platform == "iOS") {
     registerPushwooshIOS(ionicPopup, appConfig);
   }
-  /**
-  if (device.platform == "Win32NT") {
-    registerPushwooshWP();
-  }**/
-
+	
+  //if (device.platform == "Win32NT") {
+    //registerPushwooshWP();
+  //}
 }
 
 angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordova'])
@@ -32,8 +32,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
   pushwooshAppId: "PUSHWOOSH_APP_ID"
 })
 
-.run(function ($ionicPlatform, $ionicPopup, appConfig, $rootScope, $cordovaNetwork) {
+.run(function ($ionicPlatform, $ionicPopup, appConfig, $rootScope, ConnectivityMonitor, $ionicHistory, $state) {
   $ionicPlatform.ready(function () {
+		$rootScope.$on('$ionicView.enter', function(event, data) {
+			if (data.stateId !== 'app.favorites') {
+				if (ConnectivityMonitor.isOffline() === true) {
+					$ionicHistory.nextViewOptions({
+						disableBack: true
+					});
+					$state.go("app.404");
+				}
+			}
+		});
+		
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -44,6 +55,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordov
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+		
     initPushwoosh($ionicPopup, appConfig);
   });
 })

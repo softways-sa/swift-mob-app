@@ -9,37 +9,6 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  // Form data for the login modal
-  //$scope.loginData = {};
-
-  // Create the login modal that we will use later
-  //$ionicModal.fromTemplateUrl('templates/login.html', {
-  //scope: $scope
-  //}).then(function(modal) {
-  //$scope.modal = modal;
-  //});
-
-  // Triggered in the login modal to close it
-  //$scope.closeLogin = function() {
-  //$scope.modal.hide();
-  //};
-
-  // Open the login modal
-  //$scope.login = function() {
-  //$scope.modal.show();
-  //};
-
-  // Perform the login action when the user submits the login form
-  //$scope.doLogin = function() {
-  //console.log('Doing login', $scope.loginData);
-
-  // Simulate a login delay. Remove this and replace with your login
-  // code if using a login system
-  //$timeout(function() {
-  //$scope.closeLogin();
-  //}, 1000);
-  //};
-  
   $scope.total = Favorites.getTotalFavorites();
   if ($scope.total > 0) {
     $scope.show = true;
@@ -105,7 +74,6 @@ angular.module('starter.controllers', [])
 
       }
       else {
-
         window.addEventListener("online", function(e) {
           console.log("went online");
         }, false);    
@@ -118,18 +86,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('HomeCtrl', function ($scope, CategoryListing, ConnectivityMonitor, $state, appConfig, $ionicHistory) {
-
-  $scope.$on('$ionicView.enter', function(){ 
-    if(ConnectivityMonitor.isOffline() === true){
-      $ionicHistory.nextViewOptions({
-        disableBack: true
-      });
-      $state.go("app.404");
-    }
-  });
-  
-  $scope.appConfig = appConfig;
+.controller('HomeCtrl', function ($scope, CategoryListing, $state, appConfig) {
+	$scope.appConfig = appConfig;
   $scope.loading = true;
   
   $scope.promo = appConfig.serverHost + "/images/mob-app-home-promo.jpg";
@@ -177,18 +135,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ListingCtrl', function ($scope, $stateParams, ListingPage, appConfig, $state, $ionicHistory, ConnectivityMonitor) {
-
-  $scope.$on('$ionicView.enter', function(){ 
-    if(ConnectivityMonitor.isOffline() === true){
-      $ionicHistory.nextViewOptions({
-        disableBack: true
-      });
-      $state.go("app.404");
-    }
-  });
-  
-  $scope.goHome = function() {
+.controller('ListingCtrl', function ($scope, $stateParams, ListingPage, appConfig, $state, $ionicHistory) {
+	$scope.goHome = function() {
     $ionicHistory.nextViewOptions({
       disableBack: true,
       historyRoot: true
@@ -258,6 +206,7 @@ angular.module('starter.controllers', [])
     }
   };
 })
+
 .factory('$localstorage', ['$window', function ($window) {
     return {
       set: function (key, value) {
@@ -372,17 +321,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ProductCtrl', function ($scope, $stateParams, $state, ProductDetails, Favorites, $cordovaSocialSharing, $ionicHistory, ConnectivityMonitor, appConfig) {
-
-  $scope.$on('$ionicView.enter', function(){ 
-    if(ConnectivityMonitor.isOffline() === true){
-      $ionicHistory.nextViewOptions({
-        disableBack: true
-      });
-      $state.go("app.404");
-    }
-  });
-  
+.controller('ProductCtrl', function ($scope, $stateParams, ProductDetails, Favorites, $cordovaSocialSharing, $ionicHistory, appConfig) {
   $scope.goHome = function() {
     $ionicHistory.nextViewOptions({
       disableBack: true,
@@ -480,36 +419,20 @@ angular.module('starter.controllers', [])
     }
   };
 })
-.controller('ContactCtrl', function ($scope, ContactInfo, appConfig, ConnectivityMonitor, $state, $ionicHistory) {
-  
-  $scope.$on('$ionicView.enter', function(){ 
-    if(ConnectivityMonitor.isOffline() === true){
-      $ionicHistory.nextViewOptions({
-        disableBack: true
-      });
-      $state.go("app.404");
-    }
-  });
-  
+
+.controller('ContactCtrl', function ($scope, ContactInfo, appConfig) {
   $scope.appConfig = appConfig;
+
   ContactInfo.getContactDetails().success(function(data) {
     $scope.contactInfo = data.contactInfo;
   });
 })
+
 .controller('404Ctrl', function ($scope, appConfig) {
   $scope.appConfig = appConfig;
 })
 
-.controller('MapCtrl', function ($scope, $ionicHistory, $state, ContactInfo, appConfig, ConnectivityMonitor) {
-
-  $scope.$on('$ionicView.enter', function(){ 
-    if(ConnectivityMonitor.isOffline() === true){
-      $ionicHistory.nextViewOptions({
-        disableBack: true
-      });
-      $state.go("app.404");
-    }
-  });
+.controller('MapCtrl', function ($scope, ContactInfo, appConfig) {
   $scope.appConfig = appConfig;
   
   var contactInfo;
