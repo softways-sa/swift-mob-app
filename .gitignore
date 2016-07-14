@@ -6,3 +6,5 @@ platforms/
 plugins/
 nbproject/
 www/lib/
+resources/android
+resources/ios
