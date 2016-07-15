@@ -2,6 +2,8 @@ angular
   .module('starter', ['ionic', 'starter.controllers', 'ksSwiper', 'ngCordova'])
 
   .config(function ($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
+    $ionicConfigProvider.views.maxCache(3);
+
     $ionicConfigProvider.navBar.alignTitle('center');
 
     $stateProvider
@@ -14,7 +16,6 @@ angular
 
       .state('app.home', {
         url: '/home',
-        cache: false,
         views: {
           'menuContent': {
             templateUrl: 'views/home.html',
@@ -36,7 +37,6 @@ angular
 
       .state('app.product', {
         url: '/product/:productId',
-        cache: false,
         views: {
           'menuContent': {
             templateUrl: 'views/product_details.html',
@@ -47,7 +47,6 @@ angular
 
       .state('app.favorites', {
         url: '/favorites',
-        cache: false,
         views: {
           'menuContent': {
             templateUrl: 'views/favorites.html',
@@ -58,7 +57,6 @@ angular
 
       .state('app.contact', {
         url: '/contact',
-        cache: false,
         views: {
           'menuContent': {
             templateUrl: 'views/contact.html',
@@ -69,7 +67,6 @@ angular
 
       .state('app.map', {
         url: '/map',
-        cache: false,
         views: {
           'menuContent': {
             templateUrl: 'views/map.html',
@@ -80,7 +77,6 @@ angular
 
       .state('app.404', {
         url: '/404',
-        cache: false,
         views: {
           'menuContent': {
             templateUrl: 'views/404.html',
@@ -95,14 +91,14 @@ angular
 
   .run(function ($ionicPlatform, $ionicPopup, appConfig, $rootScope, $cordovaNetwork, $ionicHistory, $state) {
     $ionicPlatform.ready(function () {
-      $rootScope.$on('$ionicView.enter', function(event, data) {
-        if (data.stateId !== 'app.favorites') {
-          if (ionic.Platform.isWebView() && $cordovaNetwork.isOffline()) {
-            $ionicHistory.nextViewOptions({
-              disableBack: true
-            });
-            $state.go("app.404");
-          }
+      $rootScope.$on('$ionicView.beforeEnter', function(event, data) {
+        if (ionic.Platform.isWebView() && $cordovaNetwork.isOffline()) {
+          event.preventDefault();
+
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
+          $state.go("app.404");
         }
       });
       
