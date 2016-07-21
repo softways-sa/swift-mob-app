@@ -1,9 +1,9 @@
-<ion-view can-swipe-back="false">
+<ion-view can-swipe-back="false" cache-view="false">
   <ion-nav-title>{{appConfig.appName}}</ion-nav-title>
   <ion-content>
     <div class="top-items"><h2>Αγαπημένα</h2></div>    
     <ion-list>
-      <ion-item ng-repeat="favorite in favorites" class="item-listing" ng-if="$even">
+      <ion-item ng-repeat="favorite in favorites track by favorite.id" class="item-listing" ng-if="$even">
         <div class="row" ng-if="$even">
           <div class="col col-50" ng-repeat="favorite in [favorites[$index],favorites[$index + 1]]">
             <div class="list card" ng-show="favorite.name">
@@ -23,9 +23,9 @@
         </div>
       </ion-item>
     </ion-list>
-    <div class="row" ng-show="favoritesButton">
+    <div class="row" ng-show="showClearBtn">
       <div class="col col-100 button-visit" style="text-align: center;" >
-        <button class="button button-block button-assertive" ng-click="favoritesServices.clearFavorites()">
+        <button class="button button-block button-assertive" ng-click="clearFavorites()">
           Διαγραφή όλων
         </button>
       </div>

@@ -25,7 +25,7 @@
             <button class="button button-block button-light" ng-click="shareAnywhere()"><i class="ion-android-share-alt"></i></button>            
           </div>
           <div class="col col-35 product-bottom">
-            <button class="button button-block button-light heart" ng-class="{heart: isFavorite===true,heart2: isFavorite===false}" ng-click="favoritesService.searchFavorites(ProductInfo.id,ProductInfo.name,ProductInfo.thumb,ProductInfo.description,ProductInfo.price);"><i class="ion-ios-star"></i></button>
+            <button class="button button-block button-light {{isFavorite ? 'heart' : 'heart2'}}" ng-click="favoritesService.toggle(ProductInfo);"><i class="ion-ios-star"></i></button>
           </div>
           <div class="col col-30 product-bottom">
             <h2 ng-if="ProductInfo.price"><span class="item-price item-price-details"> € {{ProductInfo.price}}</span></h2>

@@ -9,21 +9,13 @@ angular
     //$scope.$on('$ionicView.enter', function(e) {
     //});
     $scope.total = Favorites.getTotalFavorites();
-    if ($scope.total > 0) {
-      $scope.show = true;
-    }
-
-    $scope.$watch(function () { return Favorites.getTotalFavorites(); },
-      function (newVal, oldVal) {
-        if (newVal !== oldVal) {
-          $scope.total = newVal;
-          if ($scope.total > 0) {
-            $scope.show = true;
-          }
-        }
-      }
-    );
-
+    $scope.show =  $scope.total > 0 ? true : false;
+    
+    $scope.$watchCollection(function() {return  Favorites.getFavorites()}, function(newCol) {
+      $scope.total = newCol.length;
+      
+      $scope.show =  $scope.total > 0 ? true : false;
+    });
   })
 
   .factory('CategoryListing', function ($http, appConfig) {
@@ -184,91 +176,89 @@ angular
       };
     }])
 
-  .factory('Favorites', function ($localstorage, $state) {
-    return {    
-        searchFavorites: function (favoriteId,favoriteName,favoriteImage,favoriteDescription,favoritePrice) {
-          var productId = favoriteId;
-          var productName = favoriteName;
-          var productImage = favoriteImage;
-          var productDescription = favoriteDescription;
-          var productPrice = favoritePrice;
-          var favorites = (JSON.parse($localstorage.getItem('favorites')) || []);
-          if (favorites.length === 0) {
-            this.addToFavorites(productId,productName,productImage,productDescription,productPrice);
-          }
-          else{
-            for (var i = 0; i < favorites.length; i++) {
-              if (favorites[i].id === productId) {
-                this.deleteFavorites(productId);
-                break;
-              }
-              else if (favorites[i].id !== productId) {
-                this.addToFavorites(productId,productName,productImage,productDescription,productPrice);
-              }
-            }
-          }
-        },
-        addToFavorites: function (favoriteId,favoriteName,favoriteImage,favoriteDescription,favoritePrice) {
-          var productId = favoriteId;
-          var productName = favoriteName;
-          var productImage = favoriteImage;
-          var productDescription = favoriteDescription;
-          var productPrice = favoritePrice;
-          var favorites = (JSON.parse($localstorage.getItem('favorites')) || []);        
-          var duplicate_favorite = false;
-          for (var i=0; i < favorites.length; i++) {
-            if (favorites[i].id === productId) {
-              duplicate_favorite = true;
-              break;
-            }
-          }
-          if (duplicate_favorite === false){
-            var new_item = {"id" : productId,
-              "name" : productName,
-              "image" : productImage,
-              "description" : productDescription,
-              "price" : productPrice
-            };
-            favorites.push(new_item);
-            $localstorage.setObject('favorites', favorites);
-          }
-        },
-        deleteFavorites: function (favoriteId) {  
-          var productId = favoriteId;   
-          var favorites = (JSON.parse($localstorage.getItem('favorites')) || []);
-          for (var i=0; i < favorites.length; i++) {
-            if (favorites[i].id == productId) { 
-              favorites.splice(i,1);
-              $localstorage.setObject('favorites', favorites);
-              break;
-            }
-          }
-          //$state.go($state.current, {}, { reload: true });
+  .factory('Favorites', function ($localstorage) {
+    var favorites = (JSON.parse($localstorage.getItem('favorites')) || []);
+    
+    return {
+      toggle: function (ProductInfo) {
+        var productId = ProductInfo.id;
 
-        },
-        clearFavorites: function () {  
-          $localstorage.clear();
-          $state.go($state.current, {}, { reload: true });
-        },
-        getFavorites: function () {  
-          return $localstorage.getObject('favorites');
-        },
-        getTotalFavorites: function () {
-          var total = this.getFavorites().length;
-          return total;
-        },
-        getFavoriteId: function (favoriteId) {   
-          var productId = favoriteId;   
-          var isFavorite = false;
-          var favorites = (JSON.parse($localstorage.getItem('favorites')) || []); 
-          for (var i=0; i < favorites.length; i++) {
-            if (favorites[i].id == productId) {
-              isFavorite = true;
+        if (favorites.length === 0) {
+          this.addToFavorites(ProductInfo);
+        }
+        else {
+          var toggled = false;
+
+          for (var i = 0; i < favorites.length; i++) {
+            if (favorites[i].id === productId) {
+              this.deleteFavorites(productId);
+              toggled = true;
               break;
             }
           }
-          return isFavorite;
+
+          if (toggled === false) this.addToFavorites(ProductInfo);
         }
+      },
+      addToFavorites: function (ProductInfo) {
+        var productId = ProductInfo.id;
+        var productName = ProductInfo.name;
+        var productImage = ProductInfo.thumb;
+        var productDescription = ProductInfo.description;
+        var productPrice = ProductInfo.price;      
+
+        var duplicate_favorite = false;
+        for (var i=0; i < favorites.length; i++) {
+          if (favorites[i].id === productId) {
+            duplicate_favorite = true;
+            break;
+          }
+        }
+        if (duplicate_favorite === false) {
+          var new_item = {"id" : productId,
+            "name" : productName,
+            "image" : productImage,
+            "description" : productDescription,
+            "price" : productPrice
+          };
+
+          favorites.push(new_item);
+          $localstorage.setObject('favorites', favorites);
+        }
+      },
+      deleteFavorites: function (favoriteId) {
+        var productId = favoriteId;
+
+        for (var i=0; i < favorites.length; i++) {
+          if (favorites[i].id == productId) {
+            favorites.splice(i,1);
+            $localstorage.setObject('favorites', favorites);
+            break;
+          }
+        }
+      },
+      clearFavorites: function () {
+        favorites.splice(0,favorites.length);
+        $localstorage.setObject('favorites', favorites);
+      },
+      getFavorites: function () {
+        return favorites;
+      },
+      getTotalFavorites: function () {
+        return favorites.length;
+      },
+      isFavorite: function (favoriteId) {
+        var productId = favoriteId;
+        var isFavorite = false;
+
+        for (var i=0; i < favorites.length; i++) {
+          if (favorites[i].id == productId) {
+            isFavorite = true;
+            break;
+          }
+        }
+        return isFavorite;
+      }
     };
   })
 
@@ -316,10 +306,10 @@ angular
 
     $scope.favoritesService = Favorites;
 
-    $scope.$watch(function () { return Favorites.getFavoriteId($stateParams.productId); },
+    $scope.$watch(function () { return Favorites.isFavorite($stateParams.productId); },
       function (newVal, oldVal) {
         if (typeof newVal !== 'undefined') {
-          $scope.isFavorite = Favorites.getFavoriteId($stateParams.productId);
+          $scope.isFavorite = Favorites.isFavorite($stateParams.productId);
         }
       }
     );
@@ -332,31 +322,35 @@ angular
   .controller('FavoritesCtrl', function ($scope, Favorites, appConfig, $ionicPopup) {
     $scope.appConfig = appConfig;
     $scope.favorites = Favorites.getFavorites();
-    $scope.favoritesCount = Favorites.getFavorites().length;
-    $scope.favoritesButton = false;
-    if ($scope.favoritesCount > 0) {
-      $scope.favoritesButton = true;
-    }
-    $scope.favoritesServices = Favorites;
-
-    // A confirm dialog
+    
+    $scope.showClearBtn = Favorites.getTotalFavorites() > 0 ? true : false;
+    
     $scope.showConfirm = function(id) {
       var confirmPopup = $ionicPopup.confirm({
         title: 'Διαγραφή Αγαπημένου',
         template: 'Είστε σίγουρος για την διαγραφή;'
       });
       confirmPopup.then(function(res) {
-        if(res) {
+        if (res) {
           Favorites.deleteFavorites(id);
         }
       });
-     };
-
-    $scope.$watch(function () { return Favorites.getFavorites().length; }, 
-    function (newVal, oldVal) {
-    if (newVal !== oldVal) {
-      $scope.favorites = Favorites.getFavorites();
-    }
+    };
+    
+    $scope.clearFavorites = function() {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Διαγραφή Αγαπημένων',
+        template: 'Είστε σίγουρος για την διαγραφή;'
+      });
+      confirmPopup.then(function(res) {
+        if (res) {
+          Favorites.clearFavorites();
+        }
+      });
+    };
+    
+    $scope.$watchCollection("favorites", function(newColl) {
+      $scope.showClearBtn = newColl.length > 0 ? true : false;
     });
   })
 
