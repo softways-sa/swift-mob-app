@@ -71,10 +71,6 @@
   background-color: #696969;
 }
 
-.item {
-  padding: 0px;
-}
-
 .item-complex .item-content,
 .item-radio .item-content {
   background-color: #F5F5F5;
