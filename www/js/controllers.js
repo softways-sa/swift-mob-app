@@ -35,10 +35,12 @@ angular
 
     $scope.promo = appConfig.serverHost + "/images/mob-app-home-promo.jpg";
 
-    $scope.goToTab = function(searchTerm) {
-      $state.go('app.listing', {
-        searchTerm: searchTerm
-      });
+    $scope.searchProducts = function(searchTerm) {
+      if (searchTerm) {
+        $state.go('app.listing', {
+          searchTerm: searchTerm
+        });
+      }
     };
 
     $scope._list = [];

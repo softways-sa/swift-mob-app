@@ -1,11 +1,11 @@
 <ion-view can-swipe-back="false">
   <ion-nav-title>{{appConfig.appName}}</ion-nav-title>
   <ion-content>
-    <form ng-submit="goToTab(searchTerm)">
-      <div class="item-input item-input-inset">
+    <form ng-submit="searchProducts(searchTerm)">
+      <div class="item item-input-inset">
         <label class="item-input-wrapper input-search">
           <i class="ion-search"></i>
-          <input type="text" class="search_form_title" placeholder="Ψάχνω για..." ng-model="searchTerm" required>
+          <input type="text" class="search_form_title" placeholder="Ψάχνω για..." ng-model="searchTerm">
         </label>
         <button type="submit" class="button button-small button-search">
           Αναζήτηση
@@ -15,11 +15,10 @@
     <div class="home_image"><img ng-src="{{promo}}" alt="" style="width:100%;"></div>
     <div style="text-align: center;" ng-show="loading"><ion-spinner></ion-spinner></div>
     <div class="list">
-      <a ng-repeat="category in _list" class="item item-thumbnail-left  item-icon-right" href="#/app/listing/{{category.id}}">
+      <a ng-repeat="category in _list" class="item item-thumbnail-left item-icon-right" href="#/app/listing/{{category.id}}">
         <img ng-if="category.image" ng-src="{{category.image}}" alt="" />
         <img ng-if="!category.image" ng-src="img/no-image-cat.png" alt="" />
         <h2>{{category.name}}</h2>
-        <!--<p>{{category.description}}</p>-->
         <i class="icon ion-chevron-right icon-accessory"></i>
       </a>
     </div>
