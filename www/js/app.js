@@ -113,16 +113,42 @@ angular
         StatusBar.styleDefault();
       }
 
-      function initPushwoosh(ionicPopup, appConfig) {
-        if (ionic.Platform.isAndroid()) {
-          registerPushwooshAndroid(ionicPopup, appConfig);
-        }
+      function initPushwoosh() {
+        var pushNotification = window.cordova.require("pushwoosh-cordova-plugin.PushNotification");
 
-        if (ionic.Platform.isIOS() || ionic.Platform.isIPad()) {
-          registerPushwooshIOS(ionicPopup, appConfig);
-        }
+        // set push notifications handler
+        document.addEventListener('push-notification',
+          function(event) {
+            var message = event.notification.message;
+
+            $ionicPopup.alert({
+              title: appConfig.appName,
+              template: message
+            });
+
+            pushNotification.setApplicationIconBadgeNumber(0);
+          }
+        );
+
+        // initialize Pushwoosh with project number & push woosh app id
+        // this will trigger all pending push notifications on start
+        pushNotification.onDeviceReady({
+          projectid: appConfig.googleProjectNumber,
+          appid: appConfig.pushwooshAppId,
+          serviceName: ""
+        });
+
+        // register for push notifications
+        pushNotification.registerDevice(
+          function(status) {
+          },
+          function(error) {
+          }
+        );
+
+        pushNotification.setApplicationIconBadgeNumber(0);
       }
-      
-      initPushwoosh($ionicPopup, appConfig);
+
+      initPushwoosh();
     });
   });
